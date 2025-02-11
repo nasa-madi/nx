@@ -1,0 +1,66 @@
+{
+  "name": "madi-plg-semantic-scholar",
+  "version": "0.0.0-releaseit",
+  "description": "MADI AI plugin for Semantic Scholar search",
+  "main": "lib",
+  "types": "lib/",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "@types/feathersjs__feathers": "^3.1.14"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.5",
+    "@babel/preset-env": "^7.21.5",
+    "@babel/register": "^7.21.0",
+    "@release-it/conventional-changelog": "^8.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "conventional-changelog-angular": "^7.0.0",
+    "eslint": "^8.39.0",
+    "eslint-config-standard": "^17.1.0",
+    "nock": "^13.5.0",
+    "nyc": "^15.1.0",
+    "release-it": "^17.0.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "lint": "nx lint --ext .ts",
+    "lint:fix": "nx lint --ext .ts --fix",
+    "build": "babel src -d lib",
+    "test": "printf '\\33c\\e[3J' && npm run lint; node --import tsx --test ./test/**/*.test.ts",
+    "test:dev": "echo '\\033c' && npm run lint; node --import tsx --watch --test ./test/**/*.test.ts",
+    "coverage": "nyc npm test",
+    "release": "release-it --dry-run --ci --config .release-it.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nasa-madi/madi-plg-semantic-scholar.git"
+  },
+  "keywords": [
+    "madi",
+    "semantic scholar",
+    "search"
+  ],
+  "author": {
+    "name": "James Villarrubia",
+    "email": "james.villarrubia@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "James Villarrubia",
+      "email": "james.villarrubia@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nasa-madi/madi-plg-semantic-scholar/issues"
+  },
+  "homepage": "https://github.com/nasa-madi/madi-plg-semantic-scholar#readme"
+}

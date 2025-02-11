@@ -1,0 +1,19 @@
+# Terraform specific files
+.terraform
+.terraform.lock.hcl
+*.out
+
+# Config files
+.envrc
+config/*
+!config/*example*
+anchor-terraform/config/default.yaml
+!anchor-terraform/config/*example*
+
+credentials.json
+
+## Hide Backend Config
+backend.tf
+anchor-terraform/backend.tf
+terraform.tfstate
+providers.tf

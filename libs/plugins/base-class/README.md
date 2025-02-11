@@ -1,0 +1,1 @@
+# madi-plg-base-class

@@ -1,0 +1,9 @@
+parent_folder_id                : "000000000000"
+env                             : "example-env"
+long_term_storage_bucket_prefix : "example-bucket-prefix"
+environment                     : "example-environment"
+urls                            : [ "example.domain.app" ]
+internalUrls                    : [ "example.internal.gov" ]
+brand_id                        : "000000000000"
+client_id                       : "000000000000-randomid.apps.googleusercontent.com"
+client_secret                   : "example-secret"

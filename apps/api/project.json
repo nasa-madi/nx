@@ -1,0 +1,37 @@
+{
+    "name": "api",
+    "root": "apps/api",
+    "sourceRoot": "apps/api/src",
+    "projectType": "application",
+    "targets": {
+      "test": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "cd apps/api && npm run test"
+          ]
+        }
+      },
+      "dev": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "cd apps/api && npm run dev:db",
+            "cd apps/api && npm run dev:src"
+          ],
+          "parallel": false
+        }
+      },
+      "serve": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "cd apps/api && npm run dev:db",
+            "cd apps/api && npm run dev:src"
+          ],
+          "parallel": false
+        }
+      }
+    },
+    "tags": []
+  }

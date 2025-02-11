@@ -1,0 +1,4 @@
+.terraform
+*.out
+.envrc
+config/default.yml

@@ -1,0 +1,3128 @@
+{
+    "item": [
+        {
+            "id": "6fdd8ce3-0bdd-405c-8c17-27f86fb0d622",
+            "name": "adds a new chat",
+            "request": {
+                "name": "adds a new chat",
+                "description": {
+                    "content": "Creates a new chat",
+                    "type": "text/plain"
+                },
+                "url": {
+                    "path": [
+                        "chats"
+                    ],
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json"
+                    }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"model\": \"<string>\",\n  \"frequency_penalty\": \"<number>\",\n  \"logit_bias\": {},\n  \"max_tokens\": \"<integer>\",\n  \"n\": \"<integer>\",\n  \"presence_penalty\": \"<number>\",\n  \"response_format\": {\n    \"type\": \"<string>\"\n  },\n  \"seed\": \"<integer>\",\n  \"stop\": \"<string>\",\n  \"stream\": \"<boolean>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": \"<number>\",\n  \"tools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"tool_choice\": \"<string>\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                }
+            },
+            "response": [
+                {
+                    "id": "9448a2ff-6ef4-4bc3-a4fb-68a25bf9742a",
+                    "name": "Chat created.",
+                    "originalRequest": {
+                        "url": {
+                            "path": [
+                                "chats"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "status": "Created",
+                    "code": 201,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{}",
+                    "cookie": [],
+                    "_postman_previewlanguage": "json"
+                },
+                {
+                    "id": "2b7b2379-5f96-49f6-93f0-3ea51c610676",
+                    "name": "invalid input, object invalid",
+                    "originalRequest": {
+                        "url": {
+                            "path": [
+                                "chats"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "status": "Bad Request",
+                    "code": 400,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                    "cookie": [],
+                    "_postman_previewlanguage": "json"
+                },
+                {
+                    "id": "b5726356-6c45-4ff3-b197-772682693afe",
+                    "name": "that chat already exists",
+                    "originalRequest": {
+                        "url": {
+                            "path": [
+                                "chats"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "status": "Conflict",
+                    "code": 409,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                    "cookie": [],
+                    "_postman_previewlanguage": "json"
+                },
+                {
+                    "id": "22643aa1-fbae-4f46-87df-018e30c8882c",
+                    "name": "unexpected error",
+                    "originalRequest": {
+                        "url": {
+                            "path": [
+                                "chats"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "status": "Internal Server Error",
+                    "code": 500,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                    "cookie": [],
+                    "_postman_previewlanguage": "json"
+                }
+            ],
+            "event": [],
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            }
+        },
+        {
+            "id": "e6f1ec4d-893a-4b12-87d3-a43cef16ee1a",
+            "name": "documents",
+            "item": [
+                {
+                    "id": "51b57edb-993c-49bb-9515-37ad996d575d",
+                    "name": "Returns document based on query parameters",
+                    "request": {
+                        "name": "Returns document based on query parameters",
+                        "description": {
+                            "content": "By including the appropriate query string parameters, search & return relevant documents records.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "documents"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "2bcc60a5-77a8-4ac2-8b64-e51e7fb33532",
+                            "name": "includes the results matching query string criteria",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "documents"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"total\": 2,\n  \"limit\": 10,\n  \"skip\": 0,\n  \"data\": \"documents_default\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "b74c67e3-f7d3-409b-a27d-e431c557978d",
+                            "name": "bad input parameter",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "documents"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "994bf5da-ac10-4b80-8622-3063c54e298b",
+                            "name": "default response if no query string parameters are sent",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "documents"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Internal Server Error",
+                            "code": 500,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "374377ce-c957-433d-b45c-44910770d516",
+                    "name": "adds a new document",
+                    "request": {
+                        "name": "adds a new document",
+                        "description": {
+                            "content": "Creates a new document",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "documents"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "auth": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"id\": \"<integer>\",\n  \"text\": \"<string>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "response": [
+                        {
+                            "id": "d4da88a3-acb6-438c-8fff-26d59ea0fe82",
+                            "name": "Document created.",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "documents"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "2e64fac8-2f0b-4621-b36c-bdf4dd625233",
+                            "name": "invalid input, object invalid",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "documents"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "f3d2ee6f-325c-4a4d-88db-f063eeb1acbf",
+                            "name": "that document already exists",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "documents"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Conflict",
+                            "code": 409,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "d8c7af56-cfb6-457d-84aa-d4a663f094be",
+                            "name": "unexpected error",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "documents"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Internal Server Error",
+                            "code": 500,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "f56f42c9-4221-45b4-b3fc-1f476adbee25",
+                    "name": "{documentId}",
+                    "item": [
+                        {
+                            "id": "7a54d3ec-3986-4293-9b31-41a9600bfeb4",
+                            "name": "Returns document based id",
+                            "request": {
+                                "name": "Returns document based id",
+                                "description": {
+                                    "content": "By including the id, get a single document",
+                                    "type": "text/plain"
+                                },
+                                "url": {
+                                    "path": [
+                                        "documents",
+                                        ":documentId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "documentId",
+                                            "description": "(Required) the id of a specific document"
+                                        }
+                                    ]
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "9bb349d9-e165-46b4-9efd-0207e8cbc386",
+                                    "name": "includes the results matching query string criteria",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "documents",
+                                                ":documentId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "documentId",
+                                                    "description": "(Required) the id of a specific document"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "GET",
+                                        "body": {}
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "e292601a-4f2f-4135-9395-8d8f9e1ee348",
+                                    "name": "unexpected error",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "documents",
+                                                ":documentId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "documentId",
+                                                    "description": "(Required) the id of a specific document"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "GET",
+                                        "body": {}
+                                    },
+                                    "status": "Internal Server Error",
+                                    "code": 500,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        },
+                        {
+                            "id": "df6744c4-bc95-43b8-bda0-724b6c1b8a4b",
+                            "name": "soft deletes multiple documents",
+                            "request": {
+                                "name": "soft deletes multiple documents",
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "documents",
+                                        ":documentId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "documentId",
+                                            "description": "(Required) the id of a specific document"
+                                        }
+                                    ]
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "DELETE",
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "ba2ede4b-81ff-4370-9ed4-7c82cb7e66a8",
+                                    "name": "Document deleted.",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "documents",
+                                                ":documentId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "documentId",
+                                                    "description": "(Required) the id of a specific document"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {}
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "55b7f2ab-31d3-4078-8504-4e94d70b71a9",
+                                    "name": "multiple deletes not allowed",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "documents",
+                                                ":documentId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "documentId",
+                                                    "description": "(Required) the id of a specific document"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {}
+                                    },
+                                    "status": "Method Not Allowed",
+                                    "code": 405,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "8412d03c-9bf6-4cf1-9428-52021c66c042",
+                                    "name": "unexpected error",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "documents",
+                                                ":documentId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "documentId",
+                                                    "description": "(Required) the id of a specific document"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {}
+                                    },
+                                    "status": "Internal Server Error",
+                                    "code": 500,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        },
+                        {
+                            "id": "86553fe1-d0f3-46cd-b9f1-6dee1f3eede3",
+                            "name": "patches a subset of fields on a document",
+                            "request": {
+                                "name": "patches a subset of fields on a document",
+                                "description": {
+                                    "content": "Patches a document by field",
+                                    "type": "text/plain"
+                                },
+                                "url": {
+                                    "path": [
+                                        "documents",
+                                        ":documentId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "documentId",
+                                            "description": "(Required) the id of a specific document"
+                                        }
+                                    ]
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "PATCH",
+                                "auth": null,
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"id\": \"<integer>\",\n  \"text\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "response": [
+                                {
+                                    "id": "851ff6b2-4978-4694-a7d7-afe1d12ee669",
+                                    "name": "document patched",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "documents",
+                                                ":documentId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "documentId",
+                                                    "description": "(Required) the id of a specific document"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "PATCH",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"id\": 1,\n  \"text\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "b8cf6dcb-f4f4-4b9e-a929-cbdf6194e246",
+                                    "name": "invalid input, object invalid",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "documents",
+                                                ":documentId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "documentId",
+                                                    "description": "(Required) the id of a specific document"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "PATCH",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"id\": 1,\n  \"text\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "Bad Request",
+                                    "code": 400,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        }
+                    ],
+                    "event": []
+                }
+            ],
+            "event": []
+        },
+        {
+            "id": "776b381a-5ee6-4599-9d0f-730d154b6280",
+            "name": "tools",
+            "item": [
+                {
+                    "id": "6b3963ca-8ce7-4fe2-a9fb-8fdb34ffb903",
+                    "name": "Returns tool based on query parameters",
+                    "request": {
+                        "name": "Returns tool based on query parameters",
+                        "description": {
+                            "content": "By including the appropriate query string parameters, search & return relevant tools records.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "tools"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "d6054297-a15c-428f-8116-0a5213045d45",
+                            "name": "includes the results matching query string criteria",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "tools"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"total\": 2,\n  \"limit\": 10,\n  \"skip\": 0,\n  \"data\": \"tools_default\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "65449a75-4604-4552-9189-c51e5d332618",
+                            "name": "bad input parameter",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "tools"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "bee14999-46ea-40b0-a649-f13b2d833058",
+                            "name": "default response if no query string parameters are sent",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "tools"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Internal Server Error",
+                            "code": 500,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "75c9080d-2408-4244-b7c5-86b6c190611f",
+                    "name": "adds a new tool",
+                    "request": {
+                        "name": "adds a new tool",
+                        "description": {
+                            "content": "Creates a new tool",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "tools"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "auth": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"tool_calls\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"arguments\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"arguments\": \"<string>\"\n      }\n    }\n  ]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "response": [
+                        {
+                            "id": "781dd1fe-b0e5-4e3e-b17b-dcb0adceaf56",
+                            "name": "Tool created.",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "tools"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"id\": \"call_1\",\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"get_current_weather\",\n    \"arguments\": \"{\\\"location\\\": \\\"San Francisco, CA\\\",\\\"unit\\\": \\\"celsius\\\"}\"\n  }\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"id\": \"call_1\",\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"get_current_weather\",\n    \"arguments\": \"{\\\"location\\\": \\\"San Francisco, CA\\\",\\\"unit\\\": \\\"celsius\\\"}\"\n  }\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "df6a7095-51d4-41b8-8008-38bb4796b0bf",
+                            "name": "invalid input, object invalid",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "tools"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"id\": \"call_1\",\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"get_current_weather\",\n    \"arguments\": \"{\\\"location\\\": \\\"San Francisco, CA\\\",\\\"unit\\\": \\\"celsius\\\"}\"\n  }\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "c794f150-af0e-4c04-abfd-61535bdef3d1",
+                            "name": "that tool already exists",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "tools"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"id\": \"call_1\",\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"get_current_weather\",\n    \"arguments\": \"{\\\"location\\\": \\\"San Francisco, CA\\\",\\\"unit\\\": \\\"celsius\\\"}\"\n  }\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Conflict",
+                            "code": 409,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "8a60a9b4-b944-4cf9-ad11-7f27b33c0cfd",
+                            "name": "unexpected error",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "tools"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"id\": \"call_1\",\n  \"type\": \"function\",\n  \"function\": {\n    \"name\": \"get_current_weather\",\n    \"arguments\": \"{\\\"location\\\": \\\"San Francisco, CA\\\",\\\"unit\\\": \\\"celsius\\\"}\"\n  }\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Internal Server Error",
+                            "code": 500,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                }
+            ],
+            "event": []
+        },
+        {
+            "id": "09d0ed26-df53-428c-8dde-e458499bd6bb",
+            "name": "users",
+            "item": [
+                {
+                    "id": "23cbb276-e53d-49f3-b963-7e310ddfae8b",
+                    "name": "Returns user based on query parameters",
+                    "request": {
+                        "name": "Returns user based on query parameters",
+                        "description": {
+                            "content": "By including the appropriate query string parameters, search & return relevant users records.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "users"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "9d282bbf-48cc-4944-a8d5-78c9c182d1b1",
+                            "name": "includes the results matching query string criteria",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "users"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"total\": 2,\n  \"limit\": 10,\n  \"skip\": 0,\n  \"data\": \"users_default\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "44704918-e178-4567-9d58-1c0f95f9e245",
+                            "name": "bad input parameter",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "users"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "23d12d7f-d9ed-4dc2-ac4e-60bace8ae407",
+                            "name": "default response if no query string parameters are sent",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "users"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Internal Server Error",
+                            "code": 500,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "3e96864d-34f0-478a-9c04-c83ab95e2e8a",
+                    "name": "adds a new user",
+                    "request": {
+                        "name": "adds a new user",
+                        "description": {
+                            "content": "Creates a new user",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "users"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "auth": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"id\": \"<integer>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "response": [
+                        {
+                            "id": "7a366811-3685-4ca0-81f9-a51fe7119a6c",
+                            "name": "User created.",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "users"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "b662cc84-c648-4ae8-9a24-f706f9a85431",
+                            "name": "invalid input, object invalid",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "users"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "71a97871-4e2f-4710-8e2e-31eaa368b254",
+                            "name": "that user already exists",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "users"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Conflict",
+                            "code": 409,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "3d15f1c4-aade-4230-a29b-13a0a965c654",
+                            "name": "unexpected error",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "users"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Internal Server Error",
+                            "code": 500,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "d5da1b8e-9a74-41d7-ace9-64247d9e483b",
+                    "name": "{userId}",
+                    "item": [
+                        {
+                            "id": "d095b5ac-a32f-44e1-8de4-58019b9b4c84",
+                            "name": "Returns user based id",
+                            "request": {
+                                "name": "Returns user based id",
+                                "description": {
+                                    "content": "By including the id, get a single user",
+                                    "type": "text/plain"
+                                },
+                                "url": {
+                                    "path": [
+                                        "users",
+                                        ":userId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "userId",
+                                            "description": "(Required) the id of a specific user"
+                                        }
+                                    ]
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "194e8ea0-8f85-4589-ab87-ec1d64810d10",
+                                    "name": "includes the results matching query string criteria",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "users",
+                                                ":userId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "userId",
+                                                    "description": "(Required) the id of a specific user"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "GET",
+                                        "body": {}
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "92faaa26-b282-4aab-a838-c95a2687dbd2",
+                                    "name": "unexpected error",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "users",
+                                                ":userId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "userId",
+                                                    "description": "(Required) the id of a specific user"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "GET",
+                                        "body": {}
+                                    },
+                                    "status": "Internal Server Error",
+                                    "code": 500,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        },
+                        {
+                            "id": "1ea222a0-5a10-49a0-aa6a-0cdf573eadeb",
+                            "name": "soft deletes multiple users",
+                            "request": {
+                                "name": "soft deletes multiple users",
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "users",
+                                        ":userId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "userId",
+                                            "description": "(Required) the id of a specific user"
+                                        }
+                                    ]
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "DELETE",
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "a5f79807-b7da-4633-aaee-0406707d9040",
+                                    "name": "User deleted.",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "users",
+                                                ":userId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "userId",
+                                                    "description": "(Required) the id of a specific user"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {}
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "4fe011a1-63fa-4e12-9997-43b3abaffeec",
+                                    "name": "multiple deletes not allowed",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "users",
+                                                ":userId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "userId",
+                                                    "description": "(Required) the id of a specific user"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {}
+                                    },
+                                    "status": "Method Not Allowed",
+                                    "code": 405,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "dfdfc175-e5a0-4b36-8d99-61550a1b75fd",
+                                    "name": "unexpected error",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "users",
+                                                ":userId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "userId",
+                                                    "description": "(Required) the id of a specific user"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {}
+                                    },
+                                    "status": "Internal Server Error",
+                                    "code": 500,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        },
+                        {
+                            "id": "0fd3d4f6-133d-49e7-9434-2c66c90049f8",
+                            "name": "patches a subset of fields on a user",
+                            "request": {
+                                "name": "patches a subset of fields on a user",
+                                "description": {
+                                    "content": "Patches a user by field",
+                                    "type": "text/plain"
+                                },
+                                "url": {
+                                    "path": [
+                                        "users",
+                                        ":userId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "userId",
+                                            "description": "(Required) the id of a specific user"
+                                        }
+                                    ]
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "PATCH",
+                                "auth": null,
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"id\": \"<integer>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "response": [
+                                {
+                                    "id": "6843f61d-1550-4d0b-8af4-54532998056d",
+                                    "name": "user patched",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "users",
+                                                ":userId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "userId",
+                                                    "description": "(Required) the id of a specific user"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "PATCH",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"id\": 1,\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "6d5aa1eb-3142-4443-bb75-09ec85f9dd91",
+                                    "name": "invalid input, object invalid",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "users",
+                                                ":userId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "userId",
+                                                    "description": "(Required) the id of a specific user"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "PATCH",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"id\": 1,\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "Bad Request",
+                                    "code": 400,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        }
+                    ],
+                    "event": []
+                }
+            ],
+            "event": []
+        },
+        {
+            "id": "d465d119-1e23-4f3d-ba14-408988cea458",
+            "name": "uploads",
+            "item": [
+                {
+                    "id": "523b9123-1a85-400c-8df0-e9e416151772",
+                    "name": "Returns upload based on query parameters",
+                    "request": {
+                        "name": "Returns upload based on query parameters",
+                        "description": {
+                            "content": "By including the appropriate query string parameters, search & return relevant uploads records.",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "uploads"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "GET",
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "a05432e3-df16-475d-b7aa-cb88b144144f",
+                            "name": "includes the results matching query string criteria",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "uploads"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"total\": 2,\n  \"limit\": 10,\n  \"skip\": 0,\n  \"data\": \"uploads_default\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "f907cc38-7b99-4675-b5e4-04d1d8b6e45c",
+                            "name": "bad input parameter",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "uploads"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "cda73dee-c8d1-48f0-a471-0564f85a046d",
+                            "name": "default response if no query string parameters are sent",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "uploads"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Internal Server Error",
+                            "code": 500,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "38382e33-1be6-4ba5-860a-6e83652b2d80",
+                    "name": "adds a new upload",
+                    "request": {
+                        "name": "adds a new upload",
+                        "description": {
+                            "content": "Creates a new upload",
+                            "type": "text/plain"
+                        },
+                        "url": {
+                            "path": [
+                                "uploads"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "method": "POST",
+                        "auth": null,
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"id\": \"<integer>\",\n  \"text\": \"<string>\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    },
+                    "response": [
+                        {
+                            "id": "c9e9fe24-e263-4b65-b6cf-c323d34e2d04",
+                            "name": "Upload created.",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "uploads"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "bab49c7c-a1f5-47a9-b5b3-ea93d8850df2",
+                            "name": "invalid input, object invalid",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "uploads"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "12d34d40-5824-4fec-990b-002d878abe18",
+                            "name": "that upload already exists",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "uploads"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Conflict",
+                            "code": 409,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        },
+                        {
+                            "id": "d5f24b74-27cc-4cea-be26-efdc400a4814",
+                            "name": "unexpected error",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "uploads"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": []
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "POST",
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "status": "Internal Server Error",
+                            "code": 500,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                            "cookie": [],
+                            "_postman_previewlanguage": "json"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "20459e85-3d02-4892-a96a-ad96f4dff3b6",
+                    "name": "{uploadId}",
+                    "item": [
+                        {
+                            "id": "7da8b02c-db0b-4a78-ae61-0bea5a468c94",
+                            "name": "Returns upload based id",
+                            "request": {
+                                "name": "Returns upload based id",
+                                "description": {
+                                    "content": "By including the id, get a single upload",
+                                    "type": "text/plain"
+                                },
+                                "url": {
+                                    "path": [
+                                        "uploads",
+                                        ":uploadId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "uploadId",
+                                            "description": "(Required) the id of a specific upload"
+                                        }
+                                    ]
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "GET",
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "77c5b2cb-29eb-4ccf-95c6-b292035f7201",
+                                    "name": "includes the results matching query string criteria",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "uploads",
+                                                ":uploadId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "uploadId",
+                                                    "description": "(Required) the id of a specific upload"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "GET",
+                                        "body": {}
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "2ae88bec-e4ec-4e26-94d4-76af37385a8e",
+                                    "name": "unexpected error",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "uploads",
+                                                ":uploadId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "uploadId",
+                                                    "description": "(Required) the id of a specific upload"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "GET",
+                                        "body": {}
+                                    },
+                                    "status": "Internal Server Error",
+                                    "code": 500,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        },
+                        {
+                            "id": "15d95ba6-77df-49b8-9e44-c05198dd6e9b",
+                            "name": "soft deletes multiple uploads",
+                            "request": {
+                                "name": "soft deletes multiple uploads",
+                                "description": {},
+                                "url": {
+                                    "path": [
+                                        "uploads",
+                                        ":uploadId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "uploadId",
+                                            "description": "(Required) the id of a specific upload"
+                                        }
+                                    ]
+                                },
+                                "header": [
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "DELETE",
+                                "auth": null
+                            },
+                            "response": [
+                                {
+                                    "id": "1d8b5650-b2a6-44fe-8af8-42b279846782",
+                                    "name": "Upload deleted.",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "uploads",
+                                                ":uploadId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "uploadId",
+                                                    "description": "(Required) the id of a specific upload"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {}
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "a21e744f-b9f8-4bc2-b956-0b51afc18516",
+                                    "name": "multiple deletes not allowed",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "uploads",
+                                                ":uploadId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "uploadId",
+                                                    "description": "(Required) the id of a specific upload"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {}
+                                    },
+                                    "status": "Method Not Allowed",
+                                    "code": 405,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "5d50dc0f-983c-4887-96e1-4862039d19ee",
+                                    "name": "unexpected error",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "uploads",
+                                                ":uploadId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "uploadId",
+                                                    "description": "(Required) the id of a specific upload"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "DELETE",
+                                        "body": {}
+                                    },
+                                    "status": "Internal Server Error",
+                                    "code": 500,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        },
+                        {
+                            "id": "fab31991-fb8c-4eb0-a079-f3a453d42303",
+                            "name": "patches a subset of fields on a upload",
+                            "request": {
+                                "name": "patches a subset of fields on a upload",
+                                "description": {
+                                    "content": "Patches a upload by field",
+                                    "type": "text/plain"
+                                },
+                                "url": {
+                                    "path": [
+                                        "uploads",
+                                        ":uploadId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "<integer>",
+                                            "key": "uploadId",
+                                            "description": "(Required) the id of a specific upload"
+                                        }
+                                    ]
+                                },
+                                "header": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    },
+                                    {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "method": "PATCH",
+                                "auth": null,
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"id\": \"<integer>\",\n  \"text\": \"<string>\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                }
+                            },
+                            "response": [
+                                {
+                                    "id": "da22b92b-369b-453e-93f3-390315069ce3",
+                                    "name": "upload patched",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "uploads",
+                                                ":uploadId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "uploadId",
+                                                    "description": "(Required) the id of a specific upload"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "PATCH",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"id\": 1,\n  \"text\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "OK",
+                                    "code": 200,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                },
+                                {
+                                    "id": "87225666-fa5e-4f4d-8329-54caffd0b9c2",
+                                    "name": "invalid input, object invalid",
+                                    "originalRequest": {
+                                        "url": {
+                                            "path": [
+                                                "uploads",
+                                                ":uploadId"
+                                            ],
+                                            "host": [
+                                                "{{baseUrl}}"
+                                            ],
+                                            "query": [],
+                                            "variable": [
+                                                {
+                                                    "disabled": false,
+                                                    "type": "any",
+                                                    "value": "<integer>",
+                                                    "key": "uploadId",
+                                                    "description": "(Required) the id of a specific upload"
+                                                }
+                                            ]
+                                        },
+                                        "header": [
+                                            {
+                                                "key": "Accept",
+                                                "value": "application/json"
+                                            }
+                                        ],
+                                        "method": "PATCH",
+                                        "body": {
+                                            "mode": "raw",
+                                            "raw": "{\n  \"id\": 1,\n  \"text\": \"<string>\"\n}",
+                                            "options": {
+                                                "raw": {
+                                                    "language": "json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "status": "Bad Request",
+                                    "code": 400,
+                                    "header": [
+                                        {
+                                            "key": "Content-Type",
+                                            "value": "application/json"
+                                        }
+                                    ],
+                                    "body": "{\n  \"code\": 55681125,\n  \"message\": \"amet ex voluptate id\",\n  \"name\": \"nulla non dolor quis\",\n  \"className\": \"cupid\"\n}",
+                                    "cookie": [],
+                                    "_postman_previewlanguage": "json"
+                                }
+                            ],
+                            "event": [],
+                            "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                            }
+                        }
+                    ],
+                    "event": []
+                }
+            ],
+            "event": []
+        }
+    ],
+    "event": [],
+    "variable": [
+        {
+            "type": "string",
+            "value": "/",
+            "key": "baseUrl"
+        }
+    ],
+    "info": {
+        "_postman_id": "52b66945-9908-4583-be62-f731e6405561",
+        "name": "Imported from OpenAPI",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": {
+            "content": "",
+            "type": "text/plain"
+        }
+    }
+}

@@ -1,0 +1,74 @@
+services:
+
+  ## This is the mock API available at port 8080
+  prism:
+    extends:
+      file: ../../libs/prism/docker-compose.yml
+      service: prism
+    volumes:
+      - "./api/specifications:/tmp"
+    ports:
+      - "8080:4010"
+    command: >
+      mock -m -p 4010 --host 0.0.0.0 "/tmp/api-specification.yml" -m
+
+  ## This is the real API available at port 3030
+  ##   - This builds an image for the top level docker-compose
+  ##     and may not be the same image as built under the /api folder directly
+  api:
+    build: .
+    command: node src/index.js
+    environment:
+      - NODE_ENV=development
+      - NODE_CONFIG_ENV=docker
+      - PLUGINS={"development":["casConfluence"]}
+    ports:
+      - "3030:3030"
+    volumes:
+      # adds the plugin folder
+      - ./plugins:/app/plugins
+      # adds the base class plugin
+      - ./plugins/madi-plg-base-class:/app/node_modules/madi-plg-base-class
+    networks:
+      - madi
+    depends_on:
+      database:
+        condition: service_healthy
+
+  ## This is the postgres docker DB available at port 35432
+  ##   - This only for local usage and has no bearing on CloudSQL
+  ##   - When referencing the db from a compose container, use database:5432
+  ##   - When referencing the db from an external process, use localhost:35432
+  database:
+    extends:
+      file: ../../libs/postgres/docker-compose.yml
+      service: database
+
+  #-----------------------------
+  # CLOUD STORAGE MOCK SERVICE
+  #-----------------------------
+  # This mocks out a Google Cloud Storage server so that local testing
+  # can be done with a GCS Bucket library.
+  storage:
+    extends: 
+      file: ../../libs/storage/docker-compose.yml
+      service: storage
+    volumes:
+      - ${PWD}/.uploads/preload:/app/api/preload
+      - ${PWD}/.uploads/mounted:/app/api/uploads
+    entrypoint: > 
+      sh -c "mkdir -p /app/api/uploads && cp -r /app/api/preload/* /app/api/uploads && gcp-storage-emulator start"
+    #TODO WTF Why doesn't this work on a windows machine!
+
+
+  # https://github.com/nlmatics/nlm-ingestor
+  parser:
+    extends: 
+      file: ../../libs/parsers/docker-compose.yml
+      service: nlm-ingestor
+
+networks:
+  madi:
+
+volumes:
+  database-data:

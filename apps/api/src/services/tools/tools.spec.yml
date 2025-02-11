@@ -1,0 +1,196 @@
+openapi: '3.0.2'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+security:
+  - bearerAuth: []
+tags:
+  - name: Tool
+    description: Tools available to the authenticated user that will be included with their chat completion requests.
+paths:
+  /tools:
+    get:
+      tags:
+        - Tool
+      summary: Returns tool based on query parameters
+      operationId: getTools
+      description: By including the appropriate query string parameters, search &return relevant tools records.
+      responses:
+        "200":
+          description: includes the results matching query string criteria
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToolResponseArray"
+              examples:
+                "example_tool_get_res_0":
+                  $ref: "#/components/examples/example_tool_get_res_0"
+        "400":
+          description: bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Tool
+      summary: adds a new tool
+      operationId: postTool
+      description: Creates a new tool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tool"
+            examples:
+              "example_tool_post_req_0":
+                $ref: "#/components/examples/example_tool_post_req_0"
+      responses:
+        "201":
+          description: Tool created.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Tool"
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Tool"
+              examples:
+                "example_tool_post_res_0":
+                  $ref: "#/components/examples/example_tool_post_res_0"
+                  
+        "400":
+          description: invalid input, object invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "409":
+          description: that tool already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: false
+        param:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: false
+      required:
+        - type
+        - message
+        - param
+        - code
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/Error"
+      required:
+        - error
+    
+    ToolResponseArray:
+      type: object
+      required:
+        - total
+        - limit
+        - skip
+        - data
+      properties:
+        total:
+          type: integer
+        limit:
+          type: integer
+        skip:
+          type: integer
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tool"
+    
+    Tool:
+      type: object
+      properties:
+        tool_calls:
+          type: array
+          items:
+            additionalProperties: false
+            type: object
+            properties:
+              id:
+                type: string
+              type:
+                type: string
+              function:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  arguments:
+                    anyOf:
+                      - type: string
+                      - type: object
+                        properties: {}
+                required:
+                  - name
+                  - arguments
+            required:
+              - id
+              - type
+              - function
+
+
+  examples:
+    example_tool_get_res_0:
+      value:
+        total: 1
+        limit: 10
+        skip: 0
+        data: 
+          - type: function
+            function:
+              name: get_current_weather
+              description: Get the current weather in a given location
+              parameters:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: The city and state, e.g. San Francisco, CA
+                  unit:
+                    type: string
+                    enum:
+                    - celsius
+                    - fahrenheit
+                required:
+                - location
+    
+    example_tool_post_req_0:
+      value:
+        id: call_XXXXIYR0JNTemNUCW8oBcxzpD
+        type: function
+        function:
+          name: get_current_weather
+          arguments: '{"location": "San Francisco, CA","unit": "celsius"}'
+
+    example_tool_post_res_0:
+      value:
+        role: tool
+        tool_call_id: call_JWCIYR0JNTemNUCW8oBcxzpD
+        name: get_current_weather
+        content: '{"location": "San Francisco, CA", "temperature": "10", "unit": "celsius"}'

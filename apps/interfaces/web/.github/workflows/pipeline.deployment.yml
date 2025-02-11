@@ -1,0 +1,72 @@
+name: Test and Deploy
+
+on:
+  push:
+    branches:
+      - 'develop'
+      - 'test'
+      - 'main'
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+        default: 'develop'
+     
+
+# WORKFLOW:
+# -------------------------------------------------
+# PR to develop -> lint -> smoke tests -> deploy -> merge-staging
+# Merge to test -> lint -> smoke tests -> deploy -> release -> merge-production 
+# Merge to main -> lint -> smoke tests -> deploy
+
+jobs:
+
+  lint:
+    secrets: inherit
+    uses: ./.github/workflows/job.lint.yml
+
+  smoke-tests:
+    secrets: inherit
+    uses: ./.github/workflows/job.smoke.yml
+
+  # staging-test:
+  #   if: github.ref == 'refs/heads/test'
+  #   secrets: inherit
+  #   uses: ./.github/workflows/job.smoke.yml
+
+  deploy:
+    needs: 
+      - lint
+      - smoke-tests
+    secrets: inherit
+    uses: ./.github/workflows/job.deploy-gcs.yml  
+
+  ## ONLY ON DEVELOP
+  merge-staging:
+    if: github.ref == 'refs/heads/develop'
+    needs: 
+      - deploy
+    secrets: inherit
+    uses: ./.github/workflows/job.merge.yml
+    with:
+      base-branch: 'test'
+      target-branch: 'develop'
+
+  ## ONLY ON TEST
+  release:
+    if: github.ref == 'refs/heads/test'
+    needs: 
+      - deploy
+    secrets: inherit
+    uses: ./.github/workflows/job.release.yml
+  merge-production:
+    if: github.ref == 'refs/heads/test'
+    needs: 
+      - deploy
+    secrets: inherit
+    uses: ./.github/workflows/job.merge.yml
+    with:
+      base-branch: 'main'
+      target-branch: 'test'

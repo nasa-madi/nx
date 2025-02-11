@@ -1,0 +1,19 @@
+project_id_base       : "example-project"
+org_id                : ""
+billing_account       : "000000-000000-000000"
+primary_region        : "us-central1"
+network_project_id    : "example-network-project-id"
+network_name          : "example-vpc"
+api_path              : "/api"
+db_tier               : "db-custom-1-3840" # Use appropriate db tier for your requirements
+db_size               : 10
+db_type               : "PD_SSD"
+db_backups            : true
+db_highavailability   : false
+support_email         : support@example.com
+state_bucket          : "example-tf-state-bucket"
+state_prefix          : "example-state-prefix"
+brand_title           : "Example Brand Title"
+parser_image_name     : madi-parsers-nlm
+parser_image_tag      : latest
+parser_service_prefix : parser-nlm-ingestor

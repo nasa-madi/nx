@@ -1,0 +1,239 @@
+paths:
+  /documents:
+    get:
+      tags:
+        - documents
+      summary: Returns document based on query parameters
+      operationId: getDocuments
+      description: By including the appropriate query string parameters, search &
+        return relevant documents records.
+      responses:
+        "200":
+          $ref: "#/components/responses/Document_FJS_Array"
+        "400":
+          description: bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: default response if no query string parameters are sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - documents
+      summary: adds a new document
+      operationId: postDocument
+      description: Creates a new document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/Document"
+                - type: array
+                  items:
+                    $ref: "#/components/schemas/Document"
+            examples:
+              "${names}_post_default":
+                $ref: "#/components/examples/documents_post_default"
+              "${names}_post_array":
+                $ref: "#/components/examples/documents_post_array"
+      responses:
+        "201":
+          description: Document created.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Document"
+                  - type: array
+                    items:
+                      $ref: "#/components/schemas/Document"
+              examples:
+                "${names}_post_default":
+                  $ref: "#/components/examples/documents_post_default"
+                "${names}_post_array":
+                  $ref: "#/components/examples/documents_post_array"
+        "400":
+          description: invalid input, object invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "409":
+          description: that document already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  "/documents/{documentId}":
+    get:
+      tags:
+        - documents
+      summary: Returns document based id
+      operationId: getDocument
+      description: By including the id, get a single document
+      parameters:
+        - in: path
+          name: documentId
+          description: the id of a specific document
+          required: true
+          schema:
+            $ref: "#/components/schemas/IntegerId"
+          example: 1
+      responses:
+        "200":
+          description: includes the results matching query string criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Document"
+              examples:
+                documents_id_default:
+                  $ref: "#/components/examples/documents_id_default"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - documents
+      summary: soft deletes multiple documents
+      operationId: deleteDocuments
+      parameters:
+        - in: path
+          name: documentId
+          description: the id of a specific document
+          required: true
+          schema:
+            $ref: "#/components/schemas/IntegerId"
+          example: 1
+      responses:
+        "200":
+          description: Document deleted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+              examples:
+                documents_delete:
+                  $ref: "#/components/examples/documents_id_delete_default"
+        "405":
+          description: multiple deletes not allowed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      tags:
+        - documents
+      summary: patches a subset of fields on a document
+      operationId: patchDocument
+      description: Patches a document by field
+      parameters:
+        - in: path
+          name: documentId
+          description: the id of a specific document
+          schema:
+            $ref: "#/components/schemas/IntegerId"
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Document"
+      responses:
+        "200":
+          description: document patched
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+              examples:
+                documents_id_patch_default:
+                  $ref: "#/components/examples/documents_id_patch_default"
+        "400":
+          description: invalid input, object invalid
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  responses:
+    Document_FJS_Array:
+      description: includes the results matching query string criteria
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - total
+              - limit
+              - skip
+              - data
+            properties:
+              total:
+                type: integer
+              limit:
+                type: integer
+              skip:
+                type: integer
+              data:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Document"
+          examples:
+            documents_default:
+              $ref: "#/components/examples/documents_default"
+            documents_zero:
+              $ref: "#/components/examples/documents_zero"
+  schemas:
+    Document:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/IntegerId"
+        text:
+          type: string
+  examples:
+    documents_zero:
+      value:
+        total: 0
+        limit: 10
+        skip: 0
+        data: []
+    documents_default:
+      value:
+        total: 2
+        limit: 10
+        skip: 0
+        data: documents_default
+    documents_post_default:
+      value: {}
+    documents_post_array: {}
+    documents_id_default:
+      $ref: "#/components/examples/documents_post_default"
+    documents_id_patch_default:
+      value: {}
+    documents_id_put_default: {}
+    documents_id_delete_default: {}

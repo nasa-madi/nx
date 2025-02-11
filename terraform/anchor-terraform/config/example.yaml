@@ -1,0 +1,21 @@
+project_id_base       : "example-base"
+billing_account       : "12345A-67890B-12345C"
+org_id                : "123456789012"
+primary_region        : "us-west1"
+network_project_id    : "example-base-anchor-proj-123abc"
+network_name          : "example-base-vpc"
+api_path              : "/api"
+db_tier               : "db-custom-1-3840" # db-f1-micro will not work for postgres_10
+db_size               : 10
+db_type               : "PD_SSD"
+db_backups            : true
+db_highavailability   : false
+support_email         : support@example.com
+brand_title           : "Example Authentication"
+member_domain         : "example.com"
+env                   : "anchor"
+environment           : "anchor"
+project_numbers       :
+  - 123456789012
+  - 234567890123
+  - 345678901234
