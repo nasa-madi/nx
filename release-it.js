@@ -17,13 +17,15 @@ module.exports = {
         "whatBump": (commits,options)=>{
             let defaults = {
               build: 'ignore',
-              ci: 'ignore',
+              ci: 'patch',
               docs: 'ignore',
               feat: 'minor',
               fix: 'patch',
               perf: 'patch',
-              refactor: 'ignore',
-              test: 'ignore'
+              refactor: 'patch',
+              chore: 'patch',
+              test: 'ignore',
+              style: 'patch'
             }
    
             let types = (options?.preset?.types || [])
@@ -54,31 +56,31 @@ module.exports = {
                 : `There are ${breakings} BREAKING CHANGES and ${features} features`
             }
         },
-        "preset": {
-          "name": "angular",
-          "types": [
-            {
-              "type": "refactor",
-              "release": "patch"
-            },
-            {
-              "type": "style",
-              "release": "patch"
-            },
-            {
-              "type": "perf",
-              "release": "patch"
-            },
-            {
-              "type": "chore",
-              "release": "patch"
-            },
-            {
-              "type": "ci",
-              "release": "patch"
-            }
-          ]
-        }
+        // "preset": {
+        //   "name": "angular",
+        //   "types": [
+        //     {
+        //       "type": "refactor",
+        //       "release": "patch"
+        //     },
+        //     {
+        //       "type": "style",
+        //       "release": "patch"
+        //     },
+        //     {
+        //       "type": "perf",
+        //       "release": "patch"
+        //     },
+        //     {
+        //       "type": "chore",
+        //       "release": "patch"
+        //     },
+        //     {
+        //       "type": "ci",
+        //       "release": "patch"
+        //     }
+        //   ]
+        // }
       }
     }
   }
