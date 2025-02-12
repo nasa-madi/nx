@@ -1,6 +1,6 @@
 {
   "name": "@madi/source",
-  "version": "0.0.0-release-it",
+  "version": "0.0.0-releaseit",
   "license": "MIT",
   "scripts": {
     "build:docs": "nx run docs:build"
