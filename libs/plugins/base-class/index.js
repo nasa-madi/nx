@@ -1,11 +1,9 @@
 
 import { Type  } from '@sinclair/typebox';
-import Ajv, { _ } from 'ajv';
+import Ajv from 'ajv';
 const ajv = new Ajv();
 
 export class BasePlugin {
-
-
 
 
   constructor(options) {
@@ -50,10 +48,10 @@ export class BasePlugin {
 
   
   instantiateLogger(plugin, _logger) {
-    console.log('instantiateLogger for ', plugin)
-    ['info', 'error', 'warn', 'debug'].forEach(level => {
-      console.log(args)
-      this.logger[level] = (args) => _logger[level](`[${plugin}]: ` + args);
+    console.log('instantiateLogger for ', plugin);
+    [ 'info', 'error', 'warn', 'debug' ]
+    .forEach(level => {
+        this.logger[level] = (args) => _logger[level](`[${plugin}]: ` + args);
     });
   }
 }

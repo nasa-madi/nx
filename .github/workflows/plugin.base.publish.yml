@@ -2,11 +2,16 @@ name: "PLUGIN:Base"
 
 on:
   push:
+    branches:
+      - main
+      - develop
+      - test
+      - production
     paths:
       - 'libs/plugins/base-class/**' # the plugin folder
       - '.github/workflows/plugin.base**' # this file and any related workflows
   workflow_dispatch:
-
+    
 jobs:
   build:
     name: "PLUGIN:Base:Publish to NPM"
