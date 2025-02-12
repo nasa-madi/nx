@@ -10,7 +10,7 @@ module.exports = {
       "release": false
     },
     "npm": {
-      "ignoreVersion": true,
+      "ignoreVersion": false,
       "publish": false,
       "skipChecks": true
     },
