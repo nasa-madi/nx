@@ -3,14 +3,12 @@ module.exports = {
       "requireCleanWorkingDir": false,
       "commit": false,
       "pushArgs": ["--tags"],
-      "tagName": "v${version}",
-      "tagMatch": "v*.*.*"  // This helps match existing version tags
     },
     "github": {
       "release": false
     },
     "npm": {
-      "ignoreVersion": false,
+      "ignoreVersion": true,
       "publish": false,
       "skipChecks": true
     },
@@ -48,7 +46,7 @@ module.exports = {
               if(commit.type === 'feat'){
                 features += 1;
               }
-              console.log("level", level)
+              // console.log("level", level)
               return level
             }))
             return {
