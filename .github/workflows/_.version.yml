@@ -1,0 +1,73 @@
+name: "CICD:Version"
+
+on:
+  workflow_call: 
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: "CICD:Version:Tag Github"
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+
+    - name: 'Configure Git User'
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        registry-url: 'https://registry.npmjs.org'
+        cache: 'pnpm'
+
+    - name: Configure root NPM Authentication
+      run: |
+        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+
+    - name: Install root dependencies
+      run: |
+        ls -la;
+        pnpm install --frozen-lockfile
+
+    - name: Get root version
+      id: get_version
+      run: |
+        VERSION=$(npx release-it --ci --dry-run | grep "🚀 Let's release" | sed -E 's/.*\.\.\.([0-9]+\.[0-9]+\.[0-9]+).*/\1/')
+        echo "Captured version: $VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV    
+    
+    - name: Version root repository
+      run: |
+        npx release-it $VERSION --ci
+        
+  deploy_plugin_base:
+    name: CICD:Version:Plugin Base Publish
+    needs: publish
+    secrets: inherit
+    uses: ./.github/workflows/plugin.base.publish.yml
+    with:
+      version: ${{ needs.publish.outputs.version }}
+
+  # deploy_plugin_semanticscholar:
+  #   name: CICD:Version:Plugin SemanticScholar Publish
+  #   needs: publish
+  #   secrets: inherit
+  #   uses: ./.github/workflows/plugins/plugin.semantic-scholar.publish.yml
+  #   with:
+  #     version: ${{ needs.publish.outputs.version }}

@@ -1,0 +1,136 @@
+name: "CICD:Pipeline Deployment"
+
+on:
+  push:
+    branches:
+      - '**'  # Run tests on all branches
+  pull_request:
+    branches:
+      - '**'
+
+jobs:  
+  determine_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      api_changed: ${{ steps.filter.outputs.api }}
+      docs_changed: ${{ steps.filter.outputs.docs }}
+      interface_web_changed: ${{ steps.filter.outputs.interface_web}}
+      interface_chrome_changed: ${{ steps.filter.outputs.interface_chrome}}
+      plugin_base_changed: ${{ steps.filter.outputs.plugin_base }}
+      terraform_changed: ${{ steps.filter.outputs.terraform }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Detect Changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            api:
+              - 'apps/api/**'
+              - '.github/**'
+            docs:
+              - 'apps/docs/**'
+              - '.github/**'
+            interface_web:
+              - 'apps/interfaces/web/**'
+            interface_chrome:
+              - 'apps/interfaces/chrome-extension/**'
+            plugin_base:
+              - 'libs/plugins/base-class/**'
+              - '.github/**'
+            plugin_semanticscholar:
+              - 'libs/plugins/semantic-scholar/**'
+            terraform:
+              - 'terraform/**'
+
+  # ✅ Run API Tests
+  run_api_workflow:
+    needs: determine_changes
+    if: ${{ needs.determine_changes.outputs.api_changed == 'true' }}
+    uses: ./.github/workflows/api.test.yml
+    secrets: inherit
+
+  # # ✅ Run Web Interface Tests
+  # run_web_interface_workflow:
+  #   needs: determine_changes
+  #   if: ${{ needs.determine_changes.outputs.interface_web_changed == 'true' }}
+  #   uses: ./.github/workflows/interfaces_web.pipeline.deployment.yml
+  #   secrets: inherit
+
+  # # ✅ Run Chrome Extension Tests
+  # run_chrome_interface_workflow:
+  #   needs: determine_changes
+  #   if: ${{ needs.determine_changes.outputs.interface_chrome_changed == 'true' }}
+  #   uses: ./.github/workflows/interfaces_chrome.pipeline.deployment.yml
+  #   secrets: inherit
+
+  # # ✅ Run Plugin Tests
+  # run_plugin_workflow:
+  #   needs: determine_changes
+  #   if: ${{ needs.determine_changes.outputs.plugin_base_changed == 'true' }}
+  #   uses: ./.github/workflows/plugin.pipeline.deployment.yml
+  #   secrets: inherit
+
+  # 🚀 **API Deployment**
+  deploy_api:
+    needs: run_api_workflow
+    if: success() && contains('refs/heads/main refs/heads/master refs/heads/production refs/heads/develop refs/heads/test', github.ref)
+    uses: ./.github/workflows/api.deploy.yml
+    secrets: inherit
+
+  # 🚀 **Docs Deployment**
+  deploy_docs:
+    needs: determine_changes
+    if: contains('refs/heads/main refs/heads/master refs/heads/production', github.ref) && ${{ needs.determine_changes.outputs.docs_changed == 'true' }}
+    uses: ./.github/workflows/docs.deploy.yml
+    secrets: inherit
+
+
+
+
+
+
+
+  # # 🚀 **Web Interface Deployment**
+  # deploy_web_interface:
+  #   needs: run_web_interface_workflow
+  #   if: success() && contains('refs/heads/main refs/heads/master refs/heads/production refs/heads/develop refs/heads/test', github.ref)
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy Web Interface
+  #       run: |
+  #         echo "Deploying Web Interface to GCS..."
+  #         # Add Web Interface deployment script here
+
+  # # 🚀 **Chrome Extension Deployment**
+  # deploy_chrome_interface:
+  #   needs: run_chrome_interface_workflow
+  #   if: success() && contains('refs/heads/main refs/heads/master refs/heads/production refs/heads/develop refs/heads/test', github.ref)
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy Chrome Extension
+  #       run: |
+  #         echo "Deploying Chrome Extension..."
+  #         # Add Chrome Extension deployment script here
+
+  # # 🚀 **Plugin Deployment**
+  # deploy_plugin:
+  #   needs: run_plugin_workflow
+  #   if: success() && contains('refs/heads/main refs/heads/master refs/heads/production refs/heads/develop refs/heads/test', github.ref)
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy Plugin
+  #       run: |
+  #         echo "Publishing Plugin to NPM..."
+  #         # Add Plugin deployment script here
+
+  
+  # 🎯 **Versioning (Only on `main`)**
+  versioning:
+    needs: [deploy_api, deploy_docs]
+    # needs: [deploy_api, deploy_docs, deploy_interface_web, deploy_interface_chrome, deploy_plugin_base]
+    if: success() && github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/_.version.yml
+    secrets: inherit

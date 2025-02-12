@@ -1,60 +1,48 @@
-name: "PLUGIN:Base"
+name: "PLUGIN:Base:Publish to NPM"
 
 on:
-  push:
-    paths:
-      - 'libs/plugins/base-class/**' # the plugin folder
-      - '.github/workflows/plugin.base**' # this file and any related workflows
   workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
 
 jobs:
-  build:
+  publish:
     name: "PLUGIN:Base:Publish to NPM"
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      VERSION: ${{ inputs.version }}
+
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: 9
-
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        registry-url: 'https://registry.npmjs.org'
-        cache: 'pnpm'
-
-    - name: Configure root NPM Authentication
-      run: |
-        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
-
-    - name: Install root dependencies
-      run: |
-        ls -la;
-        pnpm install --frozen-lockfile
-
-    - name: Get root version
-      id: get_version
-      run: |
-        VERSION=$(npx release-it --ci --dry-run | grep "New version" | awk '{print $NF}')
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - uses: actions/checkout@v4
   
-    - name: Configure Plugin NPM Authentication
-      run: |
-        cd libs/plugins/base-class; 
-        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
-
-    - name: Install dependencies
-      run: |
-        cd libs/plugins/base-class; 
-        npm ci;
-
-    - name: Release
-      run: |
-        cd libs/plugins/base-class;
-        npx release-it $VERSION --ci --dry-run;
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+  
+      - name: Install dependencies
+        run: |
+          cd libs/plugins/base-class
+          npm ci
+  
+      - name: Configure NPM Authentication
+        run: |
+          cd libs/plugins/base-class
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+  
+      - name: Version and Publish Plugin
+        run: |
+          cd libs/plugins/base-class
+          echo "Versioning to ${VERSION}"
+          npm version $VERSION --no-git-tag-version
+          npm publish

@@ -1,19 +1,13 @@
-name: Deploy to GitHub Pages
+name: DOCS:Deploy
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - apps/docs/**/*
-    # Review gh actions docs if you want to further define triggers, paths, etc
-    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
-
+  workflow_call:
+    
 jobs:
   build:
     if: github.ref == 'refs/heads/main'
-    name: Build Docusaurus
+    name: DOCS:Deploy:Build Docusaurus
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -62,7 +56,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/main'
-    name: Deploy to GitHub Pages
+    name: DOCS:Deploy:Deploy to GitHub Pages
     needs: build
 
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment

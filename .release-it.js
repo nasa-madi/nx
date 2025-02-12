@@ -17,13 +17,15 @@ module.exports = {
         "whatBump": (commits,options)=>{
             let defaults = {
               build: 'ignore',
-              ci: 'ignore',
+              ci: 'patch',
               docs: 'ignore',
               feat: 'minor',
               fix: 'patch',
               perf: 'patch',
-              refactor: 'ignore',
-              test: 'ignore'
+              refactor: 'patch',
+              chore: 'patch',
+              test: 'ignore',
+              style: 'patch'
             }
    
             let types = (options?.preset?.types || [])
@@ -44,7 +46,7 @@ module.exports = {
               if(commit.type === 'feat'){
                 features += 1;
               }
-              console.log("level", level)
+              // console.log("level", level)
               return level
             }))
             return {
