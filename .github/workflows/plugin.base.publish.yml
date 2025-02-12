@@ -2,11 +2,16 @@ name: "PLUGIN:Base"
 
 on:
   push:
+    branches:
+      - main
+      - develop
+      - test
+      - production
     paths:
       - 'libs/plugins/base-class/**' # the plugin folder
       - '.github/workflows/plugin.base**' # this file and any related workflows
   workflow_dispatch:
-
+    
 jobs:
   build:
     name: "PLUGIN:Base:Publish to NPM"
@@ -16,6 +21,13 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 'Configure Git User'
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
 
     - name: Setup pnpm
       uses: pnpm/action-setup@v4
