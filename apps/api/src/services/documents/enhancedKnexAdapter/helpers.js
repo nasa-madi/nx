@@ -90,12 +90,16 @@ export function leftHandArray(currentQuery, pathStart, pathEnd, operator, key, v
         if(isObject(value)) {
             let nestedOperator = Object.keys(value)[0];
             let nestedValue = Object.values(value)[0];
-            let comparator = ['like', 'not like', 'ilike','not ilike']
-            [['$like', '$notlike', '$notilike', '$ilike'].indexOf(key)];
+            let comparatorIndex = ['$like', '$notlike', '$notilike', '$ilike'].indexOf(nestedOperator);
+            let comparator = ['like', 'not like', 'ilike','not ilike'][comparatorIndex];
             if(!comparator) {
                 throw new Error(`Incorrect sub-operator for $contains: ${nestedOperator}.`);
             }
-            currentQuery.whereRaw(`jsonb_array_length(${pathStart}->${pathEnd}) ${comparator} ?`, [nestedValue]);            
+            currentQuery.whereExists(function() {
+                this.select(Model.raw('1'))
+                    .from(Model.raw(`jsonb_array_elements_text(${pathStart}->${pathEnd}) AS ${randomString}`))
+                    .whereRaw(`${randomString} ${comparator} ?`, [nestedValue]);
+            });       
         } else {
             currentQuery.whereExists(function() {
                 this.select(Model.raw('1'))

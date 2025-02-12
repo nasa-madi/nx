@@ -1,3 +1,9 @@
+nx run api:dev
+
+
+
+
+
 ```
 npm install -g pnpm;
 pnpm install;
