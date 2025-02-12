@@ -3,6 +3,8 @@ module.exports = {
       "requireCleanWorkingDir": false,
       "commit": false,
       "pushArgs": ["--tags"],
+      "tagName": "v${version}",
+      "tagMatch": "v*.*.*"  // This helps match existing version tags
     },
     "github": {
       "release": false
