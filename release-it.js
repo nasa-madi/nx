@@ -56,31 +56,31 @@ module.exports = {
                 : `There are ${breakings} BREAKING CHANGES and ${features} features`
             }
         },
-        // "preset": {
-        //   "name": "angular",
-        //   "types": [
-        //     {
-        //       "type": "refactor",
-        //       "release": "patch"
-        //     },
-        //     {
-        //       "type": "style",
-        //       "release": "patch"
-        //     },
-        //     {
-        //       "type": "perf",
-        //       "release": "patch"
-        //     },
-        //     {
-        //       "type": "chore",
-        //       "release": "patch"
-        //     },
-        //     {
-        //       "type": "ci",
-        //       "release": "patch"
-        //     }
-        //   ]
-        // }
+        "preset": {
+          "name": "angular",
+          "types": [
+            {
+              "type": "refactor",
+              "release": "patch"
+            },
+            {
+              "type": "style",
+              "release": "patch"
+            },
+            {
+              "type": "perf",
+              "release": "patch"
+            },
+            {
+              "type": "chore",
+              "release": "patch"
+            },
+            {
+              "type": "ci",
+              "release": "patch"
+            }
+          ]
+        }
       }
     }
   }
