@@ -2,6 +2,8 @@
 import { KnexService } from '@feathersjs/knex';
 import { buildJsonbQuery as bq } from './build-json-query.js';
 import { pick } from './helpers.js';
+import { flatten, unflatten } from 'flat'
+
 
 
 export class EnhancedKnexService extends KnexService {
@@ -96,29 +98,23 @@ export class EnhancedKnexService extends KnexService {
 
         // Handle $select parameter and ensure the id field is selected
         if (filters.$select) {
-            let updatedSelect = []
-            //filter out any selects that are dot paths of jsonb columns, but if there are, make sure to include the base jsonbcolumn in the select
-            if (this.jsonbColumns) {
-                for (const column of this.jsonbColumns) {
-                    for (const select of filters.$select) {
-                        if (select.includes('.')) {
-                            const dotPath = select.split('.')
-                            if (dotPath[0] === column) {
-                                updatedSelect.push(column)
-                            }
-                        }else{
-                            updatedSelect.push(select)
-                        }
+            let columnsToSelect = new Set([`${name}.${id}`]); // Start with id
+
+            // Process each select, including full jsonb columns when nested fields are requested
+            for (const select of filters.$select) {
+                if (select.includes('.')) {
+                    const [baseColumn] = select.split('.');
+                    if (this.jsonbColumns?.includes(baseColumn)) {
+                        columnsToSelect.add(`${name}.${baseColumn}`);
                     }
+                } else {
+                    columnsToSelect.add(`${name}.${select}`);
                 }
-            }        
+            }
 
-            const select = updatedSelect.map((column) => (column.includes('.') ? column : `${name}.${column}`));
-
-            // always select the id field, but make sure we only select it once
-            builder.select(...new Set([...select, `${name}.${id}`]));
-        }else{
-            builder.select(`${name}.*`)
+            builder.select(...columnsToSelect);
+        } else {
+            builder.select(`${name}.*`);
         }
 
         // remove the $search param
@@ -147,49 +143,53 @@ export class EnhancedKnexService extends KnexService {
             params.embedding = embedding
         }
         let results = await super._find(params)
-        if(this.allowJsonbSelects){
+        
+        if (this.allowJsonbSelects && params.query.$select) {
+            const { filters } = this.filterQuery(params);
             
-            const { filters, query } = this.filterQuery(params)
-            let selectedJsonbPaths = []
-            let updatedSelect = []
-
-            //since $select will include dot paths for jsonb columns, we need to handle that here
-            if (filters.$select) {
-                for (const column of filters.$select) {
-                    if (column.includes('.')) {
-                        const dotPath = column.split('.')
-                        if(!updatedSelect.includes(dotPath[0]) && this.jsonbColumns.includes(dotPath[0])){
-                            updatedSelect.push(dotPath[0])
-                        }
-                        if(!selectedJsonbPaths.includes(column)){
-                            selectedJsonbPaths.push(dotPath.slice(1).join('.'))
-                        }
-                    }else{
-                        updatedSelect.push(column)
-                    }
-                }
-
-                // required to ensure resolver uses updated select
-                params.query.$select = updatedSelect
-
-                // required to ensure resolver uses updated select
-                params.resolve.properties = updatedSelect;
-            
-                for (let i = 0; i < results.data.length; i++) {
-                    // For each result, only pick the fields in the jsonb columns that are selected
-                    // selectedJsonbPaths is an array of dot paths like ['metadata.type', 'metadata.user.details.list[0]']
-                    if (this.jsonbColumns) {
-                        for (const column of this.jsonbColumns) {
-                            const columnData = results.data[i][column];
-                            if (columnData) {
-                                // Ensure that we are picking the correct nested fields
-                                results.data[i][column] = pick(columnData, selectedJsonbPaths);
+            if (results.data?.length) {
+                results.data = results.data.map(record => {
+                    const filteredRecord = { ...record };
+                    
+                    // Process each jsonb column
+                    for (const column of this.jsonbColumns || []) {
+                        if (filteredRecord[column]) {
+                            // Flatten the JSONB object
+                            const flatObj = flatten(filteredRecord[column]);
+                            
+                            // Get all relevant paths from $select that start with this column
+                            const relevantPaths = filters.$select
+                                .filter(s => s.startsWith(`${column}.`))
+                                .map(s => s.substring(column.length + 1));
+                            
+                            if (relevantPaths.length) {
+                                // Create an object to store matched paths
+                                const filtered = {};
+                                
+                                // For each key in the flattened object
+                                Object.keys(flatObj).forEach(key => {
+                                    // Check if any relevantPath is a prefix of this key
+                                    // This will match both exact paths and array indices
+                                    if (relevantPaths.some(path => 
+                                        key === path || // exact match
+                                        key.startsWith(`${path}.`) || // nested property
+                                        /^\d+$/.test(key.substring(path.length + 1)) // array index
+                                    )) {
+                                        filtered[key] = flatObj[key];
+                                    }
+                                });
+                                
+                                // Unflatten back to nested structure
+                                filteredRecord[column] = filtered ? unflatten(filtered) : record[column];
                             }
                         }
                     }
-                }
+                    
+                    return filteredRecord;
+                });
             }
         }
-        return results
+
+        return results;
     }   
 }
