@@ -74,13 +74,30 @@ authentication:
   authStrategies:
     - googleIAP
     - googleCLI
+    - jwt
+    - zitadel
   googleIAP:
     emailField: email
     idField: googleId
   googleCLI:
     emailField: email
     idField: googleId 
-    
+  jwtOptions:
+    algorithm: HS256
+    expiresIn: 1d
+    header:
+      typ: access
+    issuer: https://your-zitadel-instance.com
+    audience: https://your-app.com
+  oauth:
+    zitadel:
+      key: "YOUR_CLIENT_ID"
+      secret: "YOUR_CLIENT_SECRET"
+      scope: ["openid", "profile", "email"]
+      authEndpoint: "https://your-zitadel-instance.com/oauth/v2/authorize"
+      tokenEndpoint: "https://your-zitadel-instance.com/oauth/v2/token"
+      userProfileEndpoint: "https://your-zitadel-instance.com/oauth/v2/userinfo"
+
 # PLUGIN SERVICES
 plugins:
   failOnImportError: true

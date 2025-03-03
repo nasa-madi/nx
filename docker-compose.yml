@@ -1,0 +1,126 @@
+services:
+
+  #-----------------------------
+  # API SERVICE
+  #-----------------------------
+  # This is the real API available at port 3030.  It builds an image 
+  # for the top level docker-compose and may not be the same image 
+  # as built under the /api folder directly
+  api:
+    extends:
+      file: ./apps/api/docker-compose.yml
+      service: api
+    profiles:
+      - backend
+      - fullstack
+      - ''
+
+  #-----------------------------
+  # DATABASE SERVICE
+  #-----------------------------
+  # This is the postgres docker DB available at port 35432 for local usage.
+  # When referencing the db from a compose container, use database:5432
+  database:    
+    extends:
+      file: ./libs/postgres/docker-compose.yml
+      service: database
+    profiles:
+      - backend
+      - fullstack
+      - ''
+
+  #-----------------------------
+  # CLOUD STORAGE MOCK SERVICE
+  #-----------------------------
+  # This mocks out a Google Cloud Storage server so that local testing
+  # can be done with a GCS Bucket library.
+  storage:
+    extends:
+      file: ./libs/storage/docker-compose.yml
+      service: storage
+    profiles:
+      - backend
+      - fullstack
+      - ''
+
+  #-----------------------------
+  # NLM PARSER SERVICE
+  #-----------------------------
+  # This Sping up an NLMParser service with a bundled Apache Tika server instance
+  parser-nlm:
+    extends:
+      file: ./libs/parsers/docker-compose.yml
+      service: nlm-ingestor
+    profiles:
+      - backend
+      - fullstack
+      - ''
+
+  #-----------------------------
+  # WEB UI SERVICE
+  #-----------------------------
+  # This is the UI service that is typically deployed at the root
+  # of the domain for this project. In the cloud, this should be served 
+  # by a static proxy.
+  interface-web:
+    extends:
+      file: ./apps/interfaces/web/docker-compose.yml
+      service: web
+    profiles:
+      - frontend
+      - fullstack
+      - ''
+  
+
+  #-----------------------------
+  # DOCS SERVICE
+  #-----------------------------
+  # This is a docusaurus service for the project documentation.
+  # documentation:
+  #   extends:
+  #     file: ./apps/docs/docker-compose.yml
+  #     service: documentation
+  #   profiles:
+  #     - docs
+  #     - ''
+      
+
+  # -----------------------------
+  # MOCK API Service
+  # -----------------------------
+  # mock-api:
+  #   extends:
+  #     file: ./libs/prism/docker-compose.yml
+  #     service: prism
+  #   profiles:
+  #     - backend
+  #     - fullstack
+  #     - ''
+
+  # -----------------------------
+  # Auth Service
+  # -----------------------------
+  auth:
+    extends:
+      file: ./libs/auth/docker-compose.yml
+      service: auth
+    profiles:
+      - backend
+      - fullstack
+      - ''
+  auth-db:
+    extends:
+      file: ./libs/auth/docker-compose.yml
+      service: auth-db
+    profiles:
+      - backend
+      - fullstack
+      - ''
+  
+
+networks:
+  madi:
+
+volumes:
+  database-data:
+  auth-data:
