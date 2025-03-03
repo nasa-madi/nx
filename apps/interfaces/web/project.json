@@ -13,14 +13,6 @@
           ]
         }
       },
-      "serve": {
-        "executor": "nx:run-commands",
-        "options": {
-          "commands": [
-            "cd apps/interfaces/web && npm run start"
-          ]
-        }
-      },
       "dev": {
         "executor": "nx:run-commands",
         "options": {
@@ -29,6 +21,14 @@
             "cd apps/interfaces/web && npm run dev"
           ],
           "parallel": true
+        }
+      },
+      "lint": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "cd apps/interfaces/web && npm run lint"
+          ]
         }
       }
     },

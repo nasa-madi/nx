@@ -19,6 +19,14 @@
           "cd apps/docs && npm run start"
         ]
       }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "cd apps/docs && npm run lint"
+        ]
+      }
     }
   },
   "tags": []

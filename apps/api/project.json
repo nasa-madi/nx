@@ -1,5 +1,6 @@
 {
     "name": "api",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "root": "apps/api",
     "sourceRoot": "apps/api/src",
     "projectType": "application",
@@ -30,6 +31,14 @@
             "cd apps/api && npm run dev:src"
           ],
           "parallel": false
+        }
+      },
+      "lint": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "cd apps/api && npm run lint"
+          ]
         }
       }
     },
