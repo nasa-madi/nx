@@ -39,8 +39,6 @@ export const document = (app) => {
   app.service(documentPath).hooks({
     around: {
       all: [
-        // jsonFilterHook(documentSchema),
-        // jsonSelectHook(documentSchema),
         schemaHooks.resolveExternal(documentExternalResolver),
         schemaHooks.resolveResult(documentResolver),
 
@@ -48,18 +46,12 @@ export const document = (app) => {
     },
     before: {
       all: [       
-        // (context) => {
-        //   console.log(context)
-        //   return context
-        // },
-        // authenticate('googleIAP','googleCLI'),
+        authenticate('googleIAP','googleCLI'),
         schemaHooks.validateQuery(documentQueryValidator),
-        // authorizeHook,
+        authorizeHook,
         schemaHooks.resolveQuery(documentQueryResolver)
       ],
-      find: [
-        // jsonFilter
-      ],
+      find: [],
       get: [],
       create: [
         schemaHooks.validateData(documentDataValidator),
