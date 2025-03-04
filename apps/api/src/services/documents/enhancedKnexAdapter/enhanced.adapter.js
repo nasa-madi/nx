@@ -154,6 +154,12 @@ export class EnhancedKnexService extends KnexService {
                     // Process each jsonb column
                     for (const column of this.jsonbColumns || []) {
                         if (filteredRecord[column]) {
+                            // need to add the column to the params if it is not already there
+                            if (!filters.$select?.includes(column)) {
+                                filters.$select = filters.$select || [];
+                                filters.$select.push(column);
+                            }
+
                             // Flatten the JSONB object
                             const flatObj = flatten(filteredRecord[column]);
                             
