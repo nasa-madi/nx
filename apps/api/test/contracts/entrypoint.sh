@@ -3,10 +3,8 @@
 # # List files
 # ls -la 
 
-echo $PWD
-
 # # Copy files
-# cp -r /etc/newman/files/* /etc/newman/
+# # cp -r /etc/newman/files/* /etc/newman/
 
 # node conversion.js contract.collection.json fixed.json 
 
@@ -32,6 +30,9 @@ ls -la
 
 # node conversion.js contract.collection.json fixed.json 
 
+echo "CONTRACT_TYPE"
+echo ${CONTRACT_TYPE}
+
 
 # Run Newman
 newman run /etc/newman/contract.collection.json \
@@ -39,5 +40,5 @@ newman run /etc/newman/contract.collection.json \
   --env-var parserUrl=http://parser:5001 \
   --env-var storageUrl=http://storage:9023 \
   --env-var baseUrl=http://api:3030 \
-  --env-var filesPath=/etc/newman/files \ 
+  --env-var filesPath=/etc/newman/files \
   --folder ${CONTRACT_TYPE}
