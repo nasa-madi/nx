@@ -29,7 +29,13 @@ jobs:
       - name: Rebase develop onto test and push
         if: github.ref_name == 'develop' && success()
         run: |
-          git checkout test || git checkout -b test origin/test
+          git fetch origin
+          if git show-ref --verify --quiet refs/remotes/origin/test; then
+            git checkout test
+          else
+            git checkout -b test develop
+            git push origin test
+          fi
           git pull origin test
           git rebase develop
           git push origin test --force
