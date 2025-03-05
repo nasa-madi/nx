@@ -1,15 +1,6 @@
 name: Test and Deploy
 
 on:
-  push: 
-    branches:
-      - 'develop'
-      - 'test'
-      - 'production'
-      - 'main'
-    paths:
-      - 'apps/api/**'
-
   workflow_dispatch:
     inputs:
       migration_input:
@@ -26,36 +17,42 @@ on:
 jobs:
 
     # TESTING
-    # api-contract-test:
-    #   secrets: inherit
-    #   uses: ./.github/workflows/api.job.contract-test.yml
+    api-contract-test:
+      secrets: inherit
+      uses: ./.github/workflows/api.job.contract-test.yml
 
     # web-test:
     #   secrets: inherit
     #   uses: ./.github/workflows/interfaces.web.test.yml
 
-    # plugin-test:
-    #   secrets: inherit
-    #   uses: ./.github/workflows/plugin.job.test.yml
 
-
+    
     # VERSIONING
     versioning:
-      needs: api-contract-test, web-test, plugin-test
+      needs:
+        - api-contract-test
+        # - web-test
       secrets: inherit
       uses: ./.github/workflows/versioning.yml
 
-
     # DEPLOYMENTS
-    # api-deploy:
-    #   # needs: contract-test
+    api-deploy:
+      needs: 
+        - api-contract-test
+        # - web-test
+      secrets: inherit
+      uses: ./.github/workflows/api.job.deploy-cloudrun.yml
+
+
+    # web-deploy:
+    #   needs: api-deploy
     #   secrets: inherit
-    #   uses: ./.github/workflows/api.job.deploy-cloudrun.yml
-
-
-    
+    #   uses: ./.github/workflows/interfaces.web.deploy.yml
 
     pull-request:
-      needs: deploy
+      needs: 
+        - api-deploy
+        # - web-deploy
+        # - versioning
       secrets: inherit
       uses: ./.github/workflows/api.job.create-pr.yml

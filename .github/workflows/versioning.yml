@@ -1,0 +1,38 @@
+name: Versioning
+
+on:
+  push:
+    branches:
+      - 'develop'
+      - 'test'
+      - 'production'
+      - 'main'
+    paths:
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+  workflow_dispatch:
+
+jobs:
+  determine-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for all tags
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(npx release-it --ci --dry-run | grep "New version" | awk '{print $NF}')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Output version
+        run: 'echo "Version determined: ${{ env.VERSION }}"'
