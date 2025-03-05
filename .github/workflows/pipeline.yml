@@ -28,11 +28,11 @@ jobs:
 
 
     
-    # # VERSIONING
-    # versioning:
-    #   needs: [api-contract-test]
-    #   secrets: inherit
-    #   uses: ./.github/workflows/versioning.yml
+    # VERSIONING
+    versioning:
+      needs: [api-contract-test]
+      secrets: inherit
+      uses: ./.github/workflows/versioning.yml
 
     # # DEPLOYMENTS
     # api-deploy:
