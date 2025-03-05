@@ -16,22 +16,50 @@ jobs:
       ENV: ${{ github.ref_name == 'main' && 'production' || github.ref_name }}        
     runs-on: ubuntu-latest
     steps:
-        - name: Create Pull Request to Test
-          if: github.ref_name == 'develop' && success()
-          uses: peter-evans/create-pull-request@v5
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            base: develop
-            branch: test
-            title: 'Deploy ${{ inputs.version }} to Test'
-            body: 'This PR is automatically created after a successful deployment from develop to test.'
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensures full history for rebase
 
-        - name: Create Pull Request to Main
-          if: github.ref_name == 'test' && success()
-          uses: peter-evans/create-pull-request@v5
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            base: test
-            branch: main
-            title: 'Deploy ${{ inputs.version }} to Main'
-            body: 'This PR is automatically created after a successful deployment from test to main.'
+      - name: Set Up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Rebase develop onto test and push
+        if: github.ref_name == 'develop' && success()
+        run: |
+          git checkout test || git checkout -b test origin/test
+          git pull origin test
+          git rebase develop
+          git push origin test --force
+
+      - name: Create Pull Request to Test
+        if: github.ref_name == 'develop' && success()
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: develop
+          branch: test
+          title: 'Deploy ${{ inputs.version }} to Test'
+          body: 'This PR is automatically created after a successful deployment from develop to test.'
+          delete-branch: true  # Clean up after merge
+
+      - name: Rebase test onto main and push
+        if: github.ref_name == 'test' && success()
+        run: |
+          git checkout main || git checkout -b main origin/main
+          git pull origin main
+          git rebase test
+          git push origin main --force
+
+      - name: Create Pull Request to Main
+        if: github.ref_name == 'test' && success()
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: test
+          branch: main
+          title: 'Deploy ${{ inputs.version }} to Main'
+          body: 'This PR is automatically created after a successful deployment from test to main.'
+          delete-branch: true  # Clean up after merge
