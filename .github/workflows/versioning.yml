@@ -43,4 +43,4 @@ jobs:
           echo "::set-output name=version::$VERSION"
       
       - name: Output version
-        run: 'echo "Version determined: ${{ env.VERSION }}"'
+        run: echo "Version determined: ${{ steps.get_version.outputs.version }}"
