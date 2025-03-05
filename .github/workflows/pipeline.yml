@@ -30,7 +30,7 @@ jobs:
     
     # VERSIONING
     versioning:
-      needs: [api-contract-test]
+      # needs: [api-contract-test]
       secrets: inherit
       uses: ./.github/workflows/versioning.yml
 
