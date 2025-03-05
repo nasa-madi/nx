@@ -3,6 +3,7 @@ module.exports = {
       "requireCleanWorkingDir": false,
       "commit": false,
       "pushArgs": ["--tags"],
+      "tagMatch": "v[0-9]*.[0-9]*.[0-9]*" // Required to exclude non-versioning tags
     },
     "github": {
       "release": false
@@ -44,7 +45,6 @@ module.exports = {
               if(commit.type === 'feat'){
                 features += 1;
               }
-              console.log("level", level)
               return level
             }))
             return {
