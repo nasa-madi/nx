@@ -11,9 +11,7 @@ on:
 
 jobs:
   deploy:
-    environment: ${{ github.ref_name == 'main' && 'production' || github.ref_name }}
-    env: 
-      ENV: ${{ github.ref_name == 'main' && 'production' || github.ref_name }}        
+    if: github.ref_name == 'develop' || github.ref_name == 'test'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
