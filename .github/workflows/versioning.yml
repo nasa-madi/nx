@@ -46,7 +46,7 @@ jobs:
       #       ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: npm install @release-it/conventional-changelog conventional-changelog-angular
+        run: npm install @release-it/conventional-changelog conventional-changelog-angular --no-save
 
       - name: Get version
         id: get_version
