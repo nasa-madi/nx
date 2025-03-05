@@ -9,6 +9,10 @@ on:
       - 'main'
   workflow_dispatch:
   workflow_call: 
+    outputs:
+      version:
+        description: "The determined version"
+        value: ${{ jobs.determine-version.outputs.version }}
 
 jobs:
   determine-version:
