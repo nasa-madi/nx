@@ -15,7 +15,7 @@ RUN pnpm install --frozen-lockfile
 COPY --chown=node:node . .
 
 # Add debug step to inspect copied files
-RUN ls -la /app/migrations
+RUN ls -la
 
 # Curl is required for health checks
 RUN apk add --no-cache curl
