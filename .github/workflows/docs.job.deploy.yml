@@ -10,8 +10,15 @@ on:
       - apps/docs/**/*
     # Review gh actions docs if you want to further define triggers, paths, etc
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
+  workflow_call: 
 
 jobs:
+  use-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output version
+        run: echo "${{ needs.versioning.outputs.version }}"
+
   build:
     if: github.ref == 'refs/heads/main'
     name: Build Docusaurus

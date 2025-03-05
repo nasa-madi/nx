@@ -40,9 +40,10 @@ jobs:
     #   secrets: inherit
     #   uses: ./.github/workflows/api.job.deploy-cloudrun.yml
 
-    # docs-deploy:
-    #   secrets: inherit
-    #   uses: ./.github/workflows/docs.job.deploy.yml
+    docs-deploy:
+      needs: versioning
+      secrets: inherit
+      uses: ./.github/workflows/docs.job.deploy.yml
 
     # web-deploy:
     #   needs: api-deploy
