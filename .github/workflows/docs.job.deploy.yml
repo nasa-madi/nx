@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Output version
-        run: echo "${{ needs.versioning.outputs.version }}"
+        run: 'echo "VERSION: ${{ inputs.version }}"'
 
   build:
     if: github.ref == 'refs/heads/main'
