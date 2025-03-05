@@ -52,6 +52,7 @@ jobs:
           registry: ${{ vars.GAR_LOCATION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.AR_REPO }}
           image_name: ${{ vars.SERVICE }}
           image_tag: ${{ github.sha }}
+          dockerfile: apps/api/Dockerfile
 
 
 
