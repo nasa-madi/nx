@@ -51,7 +51,8 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          VERSION=$(npx release-it --ci --dry-run | grep "New version" | awk '{print $NF}')
+          npx release-it --ci --dry-run;
+          VERSION=$(npx release-it --ci --dry-run | grep "New version" | awk '{print $NF}');
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Output version
