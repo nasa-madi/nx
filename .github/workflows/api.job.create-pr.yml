@@ -26,46 +26,40 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Rebase develop onto test and push
+      - name: Rebase develop onto test and create PR
         if: github.ref_name == 'develop' && success()
         run: |
           git fetch origin
-          if git show-ref --verify --quiet refs/remotes/origin/test; then
-            git checkout test
-          else
-            git checkout -b test develop
-            git push origin test
-          fi
-          git pull origin test
-          git rebase develop
-          git push origin test --force
+          git checkout -b rebase-develop-test develop
+          git rebase origin/test
+          git push origin rebase-develop-test --force
 
       - name: Create Pull Request to Test
         if: github.ref_name == 'develop' && success()
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          base: develop
-          branch: test
+          base: test
+          branch: rebase-develop-test
           title: 'Deploy ${{ inputs.version }} to Test'
-          body: 'This PR is automatically created after a successful deployment from develop to test.'
+          body: 'This PR is automatically created after a successful rebase of develop onto test.'
           delete-branch: true  # Clean up after merge
 
-      - name: Rebase test onto main and push
+      - name: Rebase test onto main and create PR
         if: github.ref_name == 'test' && success()
         run: |
-          git checkout main || git checkout -b main origin/main
-          git pull origin main
-          git rebase test
-          git push origin main --force
-
+            git fetch origin
+            git checkout -b rebase-test-main test
+            git rebase origin/main
+            git push origin rebase-test-main --force
+  
       - name: Create Pull Request to Main
         if: github.ref_name == 'test' && success()
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: test
-          branch: main
-          title: 'Deploy ${{ inputs.version }} to Main'
-          body: 'This PR is automatically created after a successful deployment from test to main.'
-          delete-branch: true  # Clean up after merge
+            token: ${{ secrets.GITHUB_TOKEN }}
+            base: main
+            branch: rebase-test-main
+            title: 'Deploy ${{ inputs.version }} to Main'
+            body: 'This PR is automatically created after a successful rebase of test onto main.'
+            delete-branch: true  # Clean up after merge
