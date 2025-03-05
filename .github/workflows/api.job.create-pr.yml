@@ -1,4 +1,4 @@
-name: Create new PR
+name: "API:Job:CreatePR"
 
 on:
   workflow_call:

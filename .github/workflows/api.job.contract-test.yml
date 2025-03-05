@@ -1,4 +1,5 @@
-name: API:Contract Tests
+name: "API:Job:Contract"
+
 
 on:
   workflow_call:
