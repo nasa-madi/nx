@@ -42,7 +42,7 @@ jobs:
       - name: Inject Google Secret
         run: |-
           SECRET_ENV=${{ github.ref_name == 'main' && 'production' || github.ref_name }}
-          gcloud secrets versions access latest --secret "${SECRET_ENV}-env-overrides" > ./config/local-${{ env.ENV }}.yml;
+          gcloud secrets versions access latest --secret "${SECRET_ENV}-env-overrides" > ./apps/api/config/local-${{ env.ENV }}.yml;
 
       - name: Build and Push Container
         uses: whoan/docker-build-with-cache-action@v5
@@ -75,7 +75,7 @@ jobs:
         if: steps.migration.outcome == 'success'
         uses: actions/github-script@v7
         with:
-          script: require('./.cicd/upsertTag.cjs')({ github, context, tag:"_migration-${{ env.ENV }}" })
+          script: require('./libs/cicd/upsertTag.cjs')({ github, context, tag:"_migration-${{ env.ENV }}" })
 
 
       - name: Seed Data to Instance
@@ -109,5 +109,5 @@ jobs:
       - name: Create Deployed Tag
         uses: actions/github-script@v7
         with:
-          script: require('./.cicd/upsertTag.cjs')({ github, context, tag:"_deployed-${{ env.ENV }}" })
+          script: require('./libs/cicd/upsertTag.cjs')({ github, context, tag:"_deployed-${{ env.ENV }}" })
      
