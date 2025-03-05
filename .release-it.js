@@ -13,6 +13,9 @@ module.exports = {
       "publish": false,
       "skipChecks": true
     },
+    "hooks": {
+      "after:release": "echo ${version} > .release-version"
+    },
     "plugins": {
       "@release-it/conventional-changelog": {
         "whatBump": (commits,options)=>{

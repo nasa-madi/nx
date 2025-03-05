@@ -18,41 +18,61 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 9
-          run_install: false
 
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-          cache-dependency-path: './pnpm-lock.yaml'
+          cache: 'npm'
 
-      - name: Get pnpm store directory
-        shell: bash
+      - name: Set up minimal package.json
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          echo '{
+            "name": "temporary-lib",
+            "version": "0.0.0-release-it",
+          }' > package.json
 
       - name: Install dependencies
-        run: pnpm add @release-it/conventional-changelog conventional-changelog-angular
+        run: npm install @release-it/conventional-changelog conventional-changelog-angular
 
       - name: Get version
         id: get_version
         run: |
-          npx release-it --ci --dry-run;
-          VERSION=$(npx release-it --ci --dry-run | grep "Let's release" | awk '{print $4}')
+          VERSION=$(npx release-it --ci --release-version)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-
+      
       - name: Output version
         run: 'echo "Version determined: ${{ env.VERSION }}"'
+
+
+      # - name: Install Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: 'pnpm'
+      #     cache-dependency-path: './pnpm-lock.yaml'
+
+      # - name: Get pnpm store directory
+      #   shell: bash
+      #   run: |
+      #     echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      # - uses: actions/cache@v4
+      #   name: Setup pnpm cache
+      #   with:
+      #     path: ${{ env.STORE_PATH }}
+      #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pnpm-store-
+
+      # - name: Install dependencies
+      #   run: pnpm add @release-it/conventional-changelog conventional-changelog-angular
+
+      # - name: Get version
+      #   id: get_version
+      #   run: |
+      #     VERSION=$(npx release-it --ci --release-version)
+      #     echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      # - name: Output version
+      #   run: 'echo "Version determined: ${{ env.VERSION }}"'
