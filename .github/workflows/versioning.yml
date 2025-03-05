@@ -26,6 +26,11 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9  # Specify the version of pnpm you want to use
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
