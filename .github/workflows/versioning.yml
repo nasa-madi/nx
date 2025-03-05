@@ -40,7 +40,7 @@ jobs:
         run: |
           VERSION=$(npx release-it --ci --release-version)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "::set-output name=version::$VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
       
       - name: Output version
-        run: echo "Version determined: ${{ steps.get_version.outputs.version }}"
+        run: 'echo "Version determined: ${{ steps.get_version.outputs.version }}"'
