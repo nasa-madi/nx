@@ -45,7 +45,7 @@ jobs:
       secrets: inherit
       uses: ./.github/workflows/docs.job.deploy.yml
       with:
-        version: ${{ needs.determine-version.outputs.version }}
+        version: ${{ needs.versioning.outputs.version }}
 
     # web-deploy:
     #   needs: api-deploy
