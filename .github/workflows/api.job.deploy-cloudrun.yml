@@ -30,7 +30,7 @@ jobs:
         id: changed-files-migrations
         uses: tj-actions/changed-files@v42
         with:
-          files: migrations/**
+          files: apps/api/migrations/**
           sha: ${{ env.MIGRATION_SHA }}
 
       - name: Authenticate with Google
