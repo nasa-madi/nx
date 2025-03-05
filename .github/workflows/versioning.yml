@@ -28,7 +28,7 @@ jobs:
         run: |
           echo '{
             "name": "temporary-lib",
-            "version": "0.0.0-release-it",
+            "version": "0.0.0-release-it"
           }' > package.json
 
       - name: Install dependencies
