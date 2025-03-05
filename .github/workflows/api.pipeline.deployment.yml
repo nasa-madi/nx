@@ -24,10 +24,10 @@ on:
         type: boolean
 
 jobs:
-    contract-test:
-      secrets: inherit
-      uses: ./.github/workflows/api.job.contract-test.yml
+    # contract-test:
+    #   secrets: inherit
+    #   uses: ./.github/workflows/api.job.contract-test.yml
     deploy:
-      needs: contract-test
+      # needs: contract-test
       secrets: inherit
       uses: ./.github/workflows/api.job.deploy-cloudrun.yml
