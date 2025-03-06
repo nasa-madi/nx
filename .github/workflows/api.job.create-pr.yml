@@ -32,6 +32,12 @@ jobs:
           git rebase origin/test
           git push origin rebase-develop-test --force
 
+      - name: Check for Changes
+        if: github.ref_name == 'develop' && success()
+        run: |
+          git fetch origin
+          git checkout rebase-develop-test
+          git diff --quiet origin/test || echo "Changes detected"
       - name: Create Pull Request to Test
         if: github.ref_name == 'develop' && success()
         uses: peter-evans/create-pull-request@v7
