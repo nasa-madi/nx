@@ -50,8 +50,8 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: test
-          base: develop
+          branch: develop
+          base: test
           title: 'Deploy ${{ inputs.version }} to Test'
           body: 'This PR is automatically created after a successful rebase of develop onto test.'
           draft: always-true
