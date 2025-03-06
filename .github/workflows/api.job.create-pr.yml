@@ -54,6 +54,7 @@ jobs:
           base: develop
           title: 'Deploy ${{ inputs.version }} to Test'
           body: 'This PR is automatically created after a successful rebase of develop onto test.'
+          draft: always-true
           # delete-branch: true  # Clean up after merge
 
       # - name: Rebase test onto main and create PR
