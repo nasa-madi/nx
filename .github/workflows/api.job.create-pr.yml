@@ -50,6 +50,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: develop
+          base: test
           title: 'Deploy ${{ inputs.version }} to Test'
           body: 'This PR is automatically created after a successful rebase of develop onto test.'
           # delete-branch: true  # Clean up after merge
