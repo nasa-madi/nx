@@ -52,16 +52,31 @@ jobs:
           git merge-base --is-ancestor origin/test origin/develop || (echo "Cannot fast-forward, changes detected" && exit 1)
 
 
+      # - name: Create Pull Request to Test
+      #   if: github.ref_name == 'develop' && success()
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     gh pr create \
+      #     --title "Deploy ${{ inputs.version }} to Test" \
+      #     --body "This PR is automatically created after a successful rebase of develop onto test." \
+      #     --base test
       - name: Create Pull Request to Test
         if: github.ref_name == 'develop' && success()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr create \
-          --title "Deploy ${{ inputs.version }} to Test" \
-          --body "This PR is automatically created after a successful rebase of develop onto test." \
-          --base test
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: pullRequest } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Deploy ${context.payload.inputs.version} to Test`,
+              head: 'develop',
+              base: 'test',
+              body: 'This PR is automatically created after a successful rebase of develop onto test.'
+            });
+            console.log(`Created pull request: ${pullRequest.html_url}`);
 
+            
       # - name: Rebase test onto main and create PR
       #   if: github.ref_name == 'test' && success()
       #   run: |
