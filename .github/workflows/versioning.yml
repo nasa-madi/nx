@@ -1,13 +1,6 @@
 name: Versioning
 
 on:
-  push:
-    branches:
-      - 'develop'
-      - 'test'
-      - 'production'
-      - 'main'
-  workflow_dispatch:
   workflow_call: 
     outputs:
       version:
