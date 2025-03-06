@@ -34,14 +34,14 @@ jobs:
 
       - name: Create Pull Request to Test
         if: github.ref_name == 'develop' && success()
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: test
           branch: rebase-develop-test
           title: 'Deploy ${{ inputs.version }} to Test'
           body: 'This PR is automatically created after a successful rebase of develop onto test.'
-          delete-branch: true  # Clean up after merge
+          # delete-branch: true  # Clean up after merge
 
       - name: Rebase test onto main and create PR
         if: github.ref_name == 'test' && success()
@@ -53,11 +53,11 @@ jobs:
   
       - name: Create Pull Request to Main
         if: github.ref_name == 'test' && success()
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v7
         with:
             token: ${{ secrets.GITHUB_TOKEN }}
             base: main
             branch: rebase-test-main
             title: 'Deploy ${{ inputs.version }} to Main'
             body: 'This PR is automatically created after a successful rebase of test onto main.'
-            delete-branch: true  # Clean up after merge
+            # delete-branch: true  # Clean up after merge
