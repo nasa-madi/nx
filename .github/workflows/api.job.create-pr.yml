@@ -42,6 +42,7 @@ jobs:
           git status
           git diff origin/test || echo "Changes detected"
           git diff --quiet origin/test || echo "No changes detected"
+          git checkout origin/test
   
 
       - name: Create Pull Request to Test
