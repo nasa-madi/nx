@@ -28,11 +28,11 @@ jobs:
 
 
     
-    # VERSIONING
-    versioning:
-      # needs: [api-contract-test]
-      secrets: inherit
-      uses: ./.github/workflows/versioning.yml
+    # # VERSIONING
+    # versioning:
+    #   # needs: [api-contract-test]
+    #   secrets: inherit
+    #   uses: ./.github/workflows/versioning.yml
 
     # # DEPLOYMENTS
     # api-deploy:
@@ -53,10 +53,10 @@ jobs:
     #   uses: ./.github/workflows/interfaces.web.deploy.yml
 
     pull-request:
-      needs: versioning
+      # needs: versioning
         # - web-deploy
         # - versioning
       secrets: inherit
       uses: ./.github/workflows/api.job.create-pr.yml
-      with:
-        version: ${{ needs.versioning.outputs.version }}
+      # with:
+      #   version: ${{ needs.versioning.outputs.version }}
