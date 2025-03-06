@@ -25,37 +25,40 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Rebase develop onto test and create PR
-        if: github.ref_name == 'develop' && success()
-        run: |
-          git fetch origin
-          git checkout -b rebase-develop-test develop
-          git rebase origin/test
-          git push origin rebase-develop-test --force
+      # - name: Rebase develop onto test and create PR
+      #   if: github.ref_name == 'develop' && success()
+      #   run: |
+      #     git fetch origin
+      #     git checkout -b rebase-develop-test develop
+      #     git rebase origin/test
+      #     git push origin rebase-develop-test --force
           
         
-      - name: Check for Changes
+      # - name: Check for Changes
+      #   if: github.ref_name == 'develop' && success()
+      #   run: |
+      #     git fetch origin
+      #     git checkout rebase-develop-test
+      #     git status
+      #     git diff origin/test || echo "Changes detected"
+      #     git diff --quiet origin/test || echo "No changes detected"
+
+      - name: Check for Fast-Forward Possibility
         if: github.ref_name == 'develop' && success()
+        # Check if test is an ancestor of develop
         run: |
           git fetch origin
-          git checkout rebase-develop-test
-          git status
-          git diff origin/test || echo "Changes detected"
-          git diff --quiet origin/test || echo "No changes detected"
-          git checkout origin/test
-  
+          git checkout develop
+          git merge-base --is-ancestor origin/test origin/develop || (echo "Cannot fast-forward, changes detected" && exit 1)
+
 
       - name: Create Pull Request to Test
         if: github.ref_name == 'develop' && success()
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: develop
-          base: test
-          title: 'Deploy ${{ inputs.version }} to Test'
-          body: 'This PR is automatically created after a successful rebase of develop onto test.'
-          draft: always-true
-          # delete-branch: true  # Clean up after merge
+        run: |
+          gh pr create \
+          --title "Deploy ${{ inputs.version }} to Test" \
+          --body "This PR is automatically created after a successful rebase of develop onto test." \
+          --base test
 
       # - name: Rebase test onto main and create PR
       #   if: github.ref_name == 'test' && success()
