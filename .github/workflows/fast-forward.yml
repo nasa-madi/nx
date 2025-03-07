@@ -1,0 +1,37 @@
+name: Fast Forward
+
+on:
+  pull_request:
+    types: [closed]
+    branches: 
+      - main
+      - test
+
+jobs:
+  auto-rebase:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Rebase target branch onto source
+        run: |
+          BASE_BRANCH=${{ github.event.pull_request.base.ref }}
+          SOURCE_BRANCH=${{ github.event.pull_request.head.ref }}
+
+          echo "Rebasing $BASE_BRANCH onto $SOURCE_BRANCH"
+
+          git checkout $BASE_BRANCH
+          git fetch origin $SOURCE_BRANCH
+          git rebase origin/$SOURCE_BRANCH
+
+          echo "Pushing updated $BASE_BRANCH to remote..."
+          git push origin $BASE_BRANCH --force-with-lease
