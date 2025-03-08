@@ -104,10 +104,17 @@ jobs:
     if:
       ${{ 
         always() && (
-          needs.api-deploy.result  != 'failure' && 
-          needs.web-deploy.result  != 'failure' && 
-          needs.docs-deploy.result != 'failure' && 
-          needs.versioning.result  != 'failure'
+          (
+            needs.api-deploy.result == 'success' || 
+            needs.web-deploy.result == 'success' || 
+            needs.docs-deploy.result == 'success' || 
+            needs.versioning.result == 'success'
+          ) && (
+            needs.api-deploy.result != 'failure' && 
+            needs.web-deploy.result != 'failure' && 
+            needs.docs-deploy.result != 'failure' && 
+            needs.versioning.result != 'failure'
+          )
         )}}
     secrets: inherit
     uses: ./.github/workflows/job.create-pr.yml
