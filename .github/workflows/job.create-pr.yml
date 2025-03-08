@@ -1,0 +1,61 @@
+name: "API:Job:CreatePR"
+
+on:
+  workflow_call:
+    inputs:
+        version:
+          description: 'The version to deploy'
+          required: true
+          type: string
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: github.ref_name == 'develop' || github.ref_name == 'test'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensures full history for rebase
+
+      - name: Set Up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check for Fast-Forward Possibility
+        if: github.ref_name == 'develop' && success()
+        # Check if test is an ancestor of develop
+        run: |
+          BASE_BRANCH=${{ github.ref_name == 'develop' && 'test' || 'main' }}
+          git fetch origin
+          git checkout ${{ github.ref_name }}
+          git merge-base --is-ancestor origin/$BASE_BRANCH origin/${{ github.ref_name }} || (echo "Cannot fast-forward, changes detected" && exit 1)
+
+      - name: Create Pull Request to Test
+        if: github.ref_name == 'develop' && success()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: existingPRs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: '${{ github.ref_name }}',
+              base: '${{ github.ref_name == 'develop' && 'test' || 'main' }}',
+              state: 'open'
+            });
+
+            if (existingPRs.length > 0) {
+              console.log('A pull request already exists.');
+            } else {
+              const { data: pullRequest } = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `Deploy ${{ inputs.version }} to Test`,
+                head: '${{ github.ref_name }}',
+                base: '${{ github.ref_name == 'develop' && 'test' || 'main' }}',
+                body: 'This PR is automatically created after a successful rebase.'
+              });
+              console.log(`Created pull request: ${pullRequest.html_url}`);
+            }

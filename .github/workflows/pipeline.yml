@@ -17,46 +17,106 @@ on:
 
 jobs:
 
-    # TESTING
-    # api-contract-test:
-    #   secrets: inherit
-    #   uses: ./.github/workflows/api.job.contract-test.yml
+  # LINTING
+  lint:
+    secrets: inherit
+    uses: ./.github/workflows/job.lint.yml
 
-    # web-test:
-    #   secrets: inherit
-    #   uses: ./.github/workflows/interfaces.web.test.yml
+  # CHANGE DETECTION
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      api: ${{ steps.filter.outputs.backend }}
+      web: ${{ steps.filter.outputs.frontend }}
+      docs: ${{ steps.filter.outputs.docs }}
+      libs: ${{ steps.filter.outputs.libs }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          api:
+            - 'apps/api/**'
+          web:
+            - 'apps/web/**'
+          docs:
+            - 'apps/docs/**'
+          libs:
+            - 'libs/**'
 
+  # TESTING
+  api-test:
+    needs: [changes]
+    if: ${{ needs.changes.outputs.api == 'true'}}
+    secrets: inherit
+    uses: ./.github/workflows/api.job.test.yml
 
-    
-    # # VERSIONING
-    # versioning:
-    #   # needs: [api-contract-test]
-    #   secrets: inherit
-    #   uses: ./.github/workflows/versioning.yml
+  web-test:
+    needs: [changes]
+    if: ${{ needs.changes.outputs.web == 'true'}}
+    secrets: inherit
+    uses: ./.github/workflows/web.job.test.yml
 
-    # # DEPLOYMENTS
-    # api-deploy:
-    #   needs: [api-contract-test]
-    #   secrets: inherit
-    #   uses: ./.github/workflows/api.job.deploy-cloudrun.yml
+  # VERSIONING
+  versioning:
+    needs: [api-test, web-test, lint]
+    # allows the versioning job to run even if api-test or web-test is skipped
+    if:
+      ${{ 
+        always() && (
+          needs.api-test.result != 'failure' && 
+          needs.web-test.result != 'failure' && 
+          needs.lint.result != 'failure'
+        )}}
+    secrets: inherit
+    uses: ./.github/workflows/job.version.yml
 
-    # docs-deploy:
-    #   needs: versioning
-    #   secrets: inherit
-    #   uses: ./.github/workflows/docs.job.deploy.yml
-    #   with:
-    #     version: ${{ needs.versioning.outputs.version }}
+  # DEPLOYMENTS
+  api-deploy:
+    needs: [versioning, changes]
+    if: ${{ needs.changes.outputs.api == 'true'}}
+    secrets: inherit
+    uses: ./.github/workflows/api.job.deploy-cloudrun.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}
 
-    # web-deploy:
-    #   needs: api-deploy
-    #   secrets: inherit
-    #   uses: ./.github/workflows/interfaces.web.deploy.yml
+  docs-deploy:
+    needs: [versioning, changes]
+    if: ${{ needs.changes.outputs.docs == 'true'}}
+    secrets: inherit
+    uses: ./.github/workflows/docs.job.deploy.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}
 
-    pull-request:
-      # needs: versioning
-        # - web-deploy
-        # - versioning
-      secrets: inherit
-      uses: ./.github/workflows/create-pr.yml
-      # with:
-      #   version: ${{ needs.versioning.outputs.version }}
+  web-deploy:
+    needs: [versioning, changes]
+    if: ${{ needs.changes.outputs.web == 'true'}}
+    secrets: inherit
+    uses: ./.github/workflows/web.job.deploy.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}
+
+  create-pr:
+    needs: [api-deploy, web-deploy, docs-deploy, versioning]
+    if:
+      ${{ 
+        always() && (
+          (
+            needs.api-deploy.result == 'success' || 
+            needs.web-deploy.result == 'success' || 
+            needs.docs-deploy.result == 'success' || 
+            needs.versioning.result == 'success'
+          ) && (
+            needs.api-deploy.result != 'failure' && 
+            needs.web-deploy.result != 'failure' && 
+            needs.docs-deploy.result != 'failure' && 
+            needs.versioning.result != 'failure'
+          )
+        )}}
+    secrets: inherit
+    uses: ./.github/workflows/job.create-pr.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}

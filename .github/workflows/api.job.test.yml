@@ -1,5 +1,3 @@
-name: "API:Job:Contract"
-
 
 on:
   workflow_call:
@@ -12,7 +10,6 @@ env:
 
 jobs:
   blueprint:
-    name: "API:Contract:Blueprint Tests"
     env:
       CONTRACT_TYPE: "blueprint"
     runs-on: ubuntu-latest
@@ -32,8 +29,8 @@ jobs:
 
       - name: Start stack
         shell: bash
+        working-directory: ${{ env.WORKDIR }}
         run: |
-          cd ${{ env.WORKDIR }}
           echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} > .env
           echo CONTRACT_TYPE=${{ env.CONTRACT_TYPE }} >> .env
           docker compose --env-file ./.env -f ${{ env.FILE }} up --exit-code-from newman
@@ -41,12 +38,11 @@ jobs:
       - name: Stop stacks
         if: always()
         shell: bash
+        working-directory: ${{ env.WORKDIR }}
         run: |
-          cd ${{ env.WORKDIR }}
           docker compose -f ${{ env.FILE }} down
   
   plugin-loader:
-    name: "API:Contract:Plugin Loader Tests"
     env:
       CONTRACT_TYPE: "plugin-loader"
     runs-on: ubuntu-latest
@@ -66,8 +62,8 @@ jobs:
 
       - name: Start stack
         shell: bash
+        working-directory: ${{ env.WORKDIR }}
         run: |
-          cd ${{ env.WORKDIR }}
           echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} > .env
           echo CONTRACT_TYPE=${{ env.CONTRACT_TYPE }} >> .env
           docker compose --env-file ./.env -f ${{ env.FILE }} up --exit-code-from newman
@@ -75,12 +71,11 @@ jobs:
       - name: Stop stacks
         if: always()
         shell: bash
+        working-directory: ${{ env.WORKDIR }}
         run: |
-          cd ${{ env.WORKDIR }}
           docker compose -f ${{ env.FILE }} down 
 
   raw-parser:
-    name: API:Contract:Raw Parser Tests"
     env:
       CONTRACT_TYPE: "raw-parser"
     runs-on: ubuntu-latest
@@ -100,13 +95,13 @@ jobs:
 
       - name: Start stack
         shell: bash
+        working-directory: ${{ env.WORKDIR }}
         run: |
-          cd ${{ env.WORKDIR }}
           docker compose -f ${{ env.FILE }} up parser newman --exit-code-from newman
         
       - name: Stop stacks
         if: always()
         shell: bash
+        working-directory: ${{ env.WORKDIR }}
         run: |
-          cd ${{ env.WORKDIR }}
           docker compose -f ${{ env.FILE }} down

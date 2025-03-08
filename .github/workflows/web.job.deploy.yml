@@ -1,0 +1,81 @@
+name: Build and Deploy to Google Cloud Storage
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'The version to deploy'
+        required: true
+        type: string  
+jobs:
+  build_and_push_image:
+
+    environment: ${{ github.ref_name == 'main' && 'production' || github.ref_name }}
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate with Google
+        uses: 'google-github-actions/auth@v2'
+        with:
+          project_id: ${{ vars.PROJECT_ID }}
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+  
+      - name: Install dependencies
+        run: npm ci 
+      
+      - name: Cache Next.js
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      
+      - name: Build the distribution
+        run: npm run build;
+
+        
+      - name: Store release SHA in JSON file
+        run: |
+          mkdir -p ./dist
+          REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          echo '{
+            "sha": "${{ github.sha }}",
+            "owner": "${{ github.repository_owner }}",
+            "repo": "'$REPO_NAME'",
+            "branch": "${{ github.ref_name }}"
+          }' > ./dist/sha.json
+
+      - id: 'upload-folder'
+        uses: 'google-github-actions/upload-cloud-storage@v2'
+        with:
+          parent: false
+          path: './dist'
+          destination: ${{ vars.BUCKET }}
+          headers: |-
+            cache-control: public, max-age=0 
+          ## TODO:  Set max-age back up to 3600 when stack stabilizes.

@@ -13,7 +13,6 @@ on:
         required: true
         type: string
         default: 'develop'
-     
 
 # WORKFLOW:
 # -------------------------------------------------
