@@ -33,8 +33,15 @@ jobs:
 
   # VERSIONING
   versioning:
-    needs: [api-test, web-test]
-    if: ${{ needs.api-test.result == 'success' || needs.web-test.result == 'success' }}
+    needs: [api-test, web-test, lint]
+    # allows the versioning job to run even if api-test or web-test is skipped
+    if:
+      ${{ 
+        always() && (
+          needs.api-test.result != 'failure' && 
+          needs.web-test.result != 'failure' && 
+          needs.lint.result != 'failure'
+        )}}
     secrets: inherit
     uses: ./.github/workflows/job.version.yml
 
