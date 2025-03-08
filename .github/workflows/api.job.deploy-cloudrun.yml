@@ -3,7 +3,11 @@ name: "API:Job:Deploy"
 
 on:
   workflow_call:
-
+    inputs:
+      version:
+        description: 'The version to deploy'
+        required: true
+        type: string
 jobs:
   deploy:
     environment: ${{ github.ref_name == 'main' && 'production' || github.ref_name }}
