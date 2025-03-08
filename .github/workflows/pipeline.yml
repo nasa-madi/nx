@@ -22,12 +22,40 @@ jobs:
     secrets: inherit
     uses: ./.github/workflows/job.lint.yml
 
+  # CHANGE DETECTION
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      api: ${{ steps.filter.outputs.backend }}
+      web: ${{ steps.filter.outputs.frontend }}
+      docs: ${{ steps.filter.outputs.docs }}
+      libs: ${{ steps.filter.outputs.libs }}
+    steps:
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          api:
+            - 'apps/api/**'
+          web:
+            - 'apps/web/**'
+          docs:
+            - 'apps/docs/**'
+          libs:
+            - 'libs/**'
+
   # TESTING
   api-test:
+    needs: [changes]
+    if: ${{ needs.changes.outputs.api == 'true'}}
     secrets: inherit
-    uses: ./.github/workflows/api.job.contract-test.yml
+    uses: ./.github/workflows/api.job.test.yml
 
   web-test:
+    needs: [changes]
+    if: ${{ needs.changes.outputs.web == 'true'}}
     secrets: inherit
     uses: ./.github/workflows/web.job.test.yml
 
@@ -47,29 +75,39 @@ jobs:
 
   # DEPLOYMENTS
   api-deploy:
-    needs: [versioning]
+    needs: [versioning, changes]
+    if: ${{ needs.changes.outputs.api == 'true'}}
     secrets: inherit
     uses: ./.github/workflows/api.job.deploy-cloudrun.yml
     with:
       version: ${{ needs.versioning.outputs.version }}
 
   docs-deploy:
-    needs: [versioning]
+    needs: [versioning, changes]
+    if: ${{ needs.changes.outputs.docs == 'true'}}
     secrets: inherit
     uses: ./.github/workflows/docs.job.deploy.yml
     with:
       version: ${{ needs.versioning.outputs.version }}
 
   web-deploy:
-    needs: [versioning]
+    needs: [versioning, changes]
+    if: ${{ needs.changes.outputs.web == 'true'}}
     secrets: inherit
     uses: ./.github/workflows/web.job.deploy.yml
     with:
       version: ${{ needs.versioning.outputs.version }}
 
   create-pr:
-    needs: [api-deploy, docs-deploy, versioning]
-    if: ${{ needs.api-deploy.result == 'success' || needs.docs-deploy.result == 'success' }}
+    needs: [api-deploy, web-deploy, docs-deploy, versioning]
+    if:
+      ${{ 
+        always() && (
+          needs.api-deploy.result  != 'failure' && 
+          needs.web-deploy.result  != 'failure' && 
+          needs.docs-deploy.result != 'failure' && 
+          needs.versioning.result  != 'failure'
+        )}}
     secrets: inherit
     uses: ./.github/workflows/job.create-pr.yml
     with:
