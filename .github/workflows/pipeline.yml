@@ -17,44 +17,49 @@ on:
 
 jobs:
 
-    # TESTING
-    api-contract-test:
-      secrets: inherit
-      uses: ./.github/workflows/api.job.contract-test.yml
+  # LINTING
+  lint:
+    secrets: inherit
+    uses: ./.github/workflows/job.lint.yml
 
-    # web-test:
-    #   secrets: inherit
-    #   uses: ./.github/workflows/interfaces.web.test.yml
+  # TESTING
+  api-test:
+    secrets: inherit
+    uses: ./.github/workflows/api.job.contract-test.yml
 
+  web-test:
+    secrets: inherit
+    uses: ./.github/workflows/web.job.test.yml
 
-    
-    # VERSIONING
-    versioning:
-      needs: [api-contract-test]
-      secrets: inherit
-      uses: ./.github/workflows/versioning.yml
+  # VERSIONING
+  versioning:
+    needs: [api-test, web-test]
+    if: ${{ needs.api-test.result == 'success' || needs.web-test.result == 'success' }}
+    secrets: inherit
+    uses: ./.github/workflows/job.version.yml
 
-    # DEPLOYMENTS
-    api-deploy:
-      needs: [versioning]
-      secrets: inherit
-      uses: ./.github/workflows/api.job.deploy-cloudrun.yml
+  # DEPLOYMENTS
+  api-deploy:
+    needs: [versioning]
+    secrets: inherit
+    uses: ./.github/workflows/api.job.deploy-cloudrun.yml
 
-    docs-deploy:
-      needs: [versioning]
-      secrets: inherit
-      uses: ./.github/workflows/docs.job.deploy.yml
-      with:
-        version: ${{ needs.versioning.outputs.version }}
+  docs-deploy:
+    needs: [versioning]
+    secrets: inherit
+    uses: ./.github/workflows/docs.job.deploy.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}
 
-    # web-deploy:
-    #   needs: api-deploy
-    #   secrets: inherit
-    #   uses: ./.github/workflows/interfaces.web.deploy.yml
+  # web-deploy:
+  #   needs: api-deploy
+  #   secrets: inherit
+  #   uses: ./.github/workflows/interfaces.web.deploy.yml
 
-    create-pr:
-      needs: [api-deploy, docs-deploy, versioning]
-      secrets: inherit
-      uses: ./.github/workflows/create-pr.yml
-      with:
-        version: ${{ needs.versioning.outputs.version }}
+  create-pr:
+    needs: [api-deploy, docs-deploy, versioning]
+    if: ${{ needs.api-deploy.result == 'success' || needs.docs-deploy.result == 'success' }}
+    secrets: inherit
+    uses: ./.github/workflows/create-pr.yml
+    with:
+      version: ${{ needs.versioning.outputs.version }}

@@ -5,13 +5,15 @@
   "scripts": {
     "build:docs": "nx run docs:build",
     "dev": "nx run-many --target=dev --all",
-    "lint": "nx run-many --target=lint --all",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:strict": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings=0",
     "build": "nx run-many --target=build --all",
     "test": "nx run-many --target=test --all",
     "e2e": "docker-compose up --build e2e-tests"
   },
   "private": true,
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.0",
     "@nx/esbuild": "^20.3.2",
     "@nx/eslint": "^20.3.2",
     "@nx/express": "^20.3.2",
@@ -35,6 +37,7 @@
     "eslint": "^9.21.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-react": "^7.37.4",
