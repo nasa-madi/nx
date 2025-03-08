@@ -2,6 +2,8 @@
   "name": "@madi/source",
   "version": "0.0.0-release-it",
   "license": "MIT",
+  "type": "module",
+  
   "scripts": {
     "build:docs": "nx run docs:build",
     "dev": "nx run-many --target=dev --all",
