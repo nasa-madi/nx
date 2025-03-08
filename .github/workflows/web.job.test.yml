@@ -12,35 +12,41 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: 20
 
-      - name: Cache Node.js modules
-        id: cache-node-modules
+      - name: Install pnpm
+        run: npm install -g pnpm
+        working-directory: apps/interfaces/web
+
+
+      - name: Cache dependencies
         uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('apps/interfaces/web/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
+        working-directory: apps/interfaces/web
 
       - name: Cache Playwright browsers
         id: cache-playwright-browsers
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('apps/interfaces/web/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-playwright-
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-          
+        working-directory: apps/interfaces/web
+      
       - name: Run Playwright tests
         run: npx playwright test
+        working-directory: apps/interfaces/web
